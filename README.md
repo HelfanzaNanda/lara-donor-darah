@@ -1,6 +1,6 @@
 ## **Installation**
 
-- **git clone https://gitlab.com/dydan-project/reservasi-bordir.git**
+- **git clone https://gitlab.com/dydan-project/donor-darah.git**
 - **composer install**
 - **cp .env.example .env**  (config database)
 - **php artisan migrate**
