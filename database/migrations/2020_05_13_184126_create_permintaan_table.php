@@ -17,8 +17,14 @@ class CreatePermintaanTable extends Migration
             $table->bigIncrements('id');
             $table->integer('user_id')->nullable();
             $table->integer('darah_id')->nullable();
+            $table->string('nama_pasien', 35);
+            $table->string('jenis_kelamin', 35);
+            $table->string('ruangan', 35);
+            $table->string('diagnosa', 50);
             $table->integer('jumlah');
-            $table->string('division')->nullable();
+            $table->string('tempat', 35);
+            $table->date('tanggal');
+            $table->string('nama_dokter', 35);
             $table->timestamps();
         });
     }

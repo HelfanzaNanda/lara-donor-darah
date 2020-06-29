@@ -62,7 +62,7 @@
                             <h8 class="text-red">*Note: Jumlah stok saat ini</h8>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Opsi</label>
                             <select name="opsi" class="form-control" require>
@@ -77,10 +77,16 @@
                             <input type="text" class="form-control" name="qty_new" placeholder="50" require>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Harga <small>per kantong</small></label>
+                            <input type="text" class="form-control" name="harga" value="{{$stok->harga}}" placeholder="100000 /kantong">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="box-footer">
-            <button type="submit" class="btn btn-success bg-green">Simpan</button>
+            <button type="submit" class="btn btn-success bg-green btn-sm">Simpan</button>
             </div>
         </form>
     </div>

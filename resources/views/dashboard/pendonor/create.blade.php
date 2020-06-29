@@ -194,8 +194,6 @@
     $('.datepicker').datepicker({
         format: 'dd-mm-yyyy',
         showInputs: false,
-        todayHighlight:'TRUE',
-        startDate: '-0d',
         autoclose: true,
     });
   })

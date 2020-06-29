@@ -1,13 +1,8 @@
 @extends('dashboard.layouts.app')
-@section('title', 'Stok Darah')
+@section('title', 'Pesan Darah')
 
 @section('content')
 <div class="row">
-<div class="box">
-        <div class="box-header">
-            <a href="{{route('stock.create')}}" class="btn btn-secondary bg-green btn-sm pull-left" style="margin-top: 0px; margin-bottom: 0px;"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Stok</a>
-        </div>
-    </div>
     <div class="box">
         <div class="box-header">
         <!-- Horizontal Form -->
@@ -31,14 +26,15 @@
         @endif
         </div>
         <div class="box-body">
-            <table id="stock-table" class="table table-bordered table-striped" style="width:100%!important;">
+            <table id="order-table" class="table table-bordered table-striped" style="width:100%!important;">
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="150">Golongan Darah</th>
-                    <th>Jenis Tranfusi</th>
+                    <th width="150">Pasien</th>
+                    <th>Golongan Darah</th>
                     <th>Jumlah</th>
-                    <th>Harga</th>
+                    <th>Status</th>
+                    <th>Pembayaran</th>
                     <th width="200">Action</th>
                     </tr>
                 </thead>
@@ -79,17 +75,18 @@
   </script>
   <script>
     $(function() {
-      $('#stock-table').DataTable({
+      $('#order-table').DataTable({
         responsive: true,
         processing: true,
         serverSide: true,
-        ajax: '{!! route('stock.getdata') !!}',
+        ajax: '{!! route('order.getdata') !!}',
         columns: [
             { data: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'gol_dar', name: 'gol_dar' },
-            { data: 'jenis_tranfusi', name: 'jenis_tranfusi' },
+            { data: 'pasien', name: 'pasien' },
+            { data: 'gol_dar', name: 'jenis_tranfusi' },
             { data: 'qty', name: 'qty' },
-            { data: 'harga', name: 'harga' },
+            { data: 'status', name: 'status' },
+            { data: 'pembayaran', name: 'pembayaran' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
       });

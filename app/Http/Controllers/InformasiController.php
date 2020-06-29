@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Information;
 use DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class InformasiController extends Controller
 {
@@ -41,9 +43,15 @@ class InformasiController extends Controller
         ],$messages,$customAttributes);
 
         if($valid == true){            
+            //cek foto
+            $cover = $request->file('foto');
+            $extension = $cover->getClientOriginalExtension();
+
+            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+
             $informasi = new Information([
                 'title' => $request->get('title'),
-                'image' => "Belum Ada Isi",
+                'image' => $cover->getFileName().'.'.$extension,
                 'kategori' => $request->get('kategori'),
                 'content' => $request->get('content')
             ]);

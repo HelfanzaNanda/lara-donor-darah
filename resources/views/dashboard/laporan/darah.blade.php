@@ -1,11 +1,44 @@
 @extends('dashboard.layouts.app')
-@section('title', 'Stok Darah')
+@section('title', 'Laporan Darah')
 
 @section('content')
 <div class="row">
-<div class="box">
+    <div class="box">
         <div class="box-header">
-            <a href="{{route('stock.create')}}" class="btn btn-secondary bg-green btn-sm pull-left" style="margin-top: 0px; margin-bottom: 0px;"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Stok</a>
+        <!-- Horizontal Form -->
+        @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+        </div>
+        @endif
+        @if ($message = Session::get('message'))
+        <div class="alert alert-warning alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+        </div>
+        @endif
+        @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+        </div>
+        @endif
+        <h4 class="text-center"><b>Darah Masuk</b></h4>
+        </div>
+        <div class="box-body">
+            <table id="stock-table" class="table table-bordered table-striped" style="width:100%!important;">
+                <thead>
+                    <tr>
+                    <th width="10">No</th>
+                    <th width="150">Golongan Darah</th>
+                    <th>Jenis Tranfusi</th>
+                    <th>Jumlah</th>
+                    <th>Harga</th>
+                    <th width="200">Action</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
     </div>
     <div class="box">
@@ -29,6 +62,7 @@
         <strong>{{ $message }}</strong>
         </div>
         @endif
+        <h4 class="text-center"><b>Darah Keluar</b></h4>
         </div>
         <div class="box-body">
             <table id="stock-table" class="table table-bordered table-striped" style="width:100%!important;">

@@ -54,12 +54,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::get('{id}/delete', 'PendonorController@destroy')->name('pendonor.delete');
         Route::get('data-pendonor', 'PendonorController@getdata')->name('pendonor.getdata');
     });
-
+    
     Route::group(['prefix' => 'darah', 'middleware' => 'auth.isPmi'], function(){
         Route::group(['prefix' => 'order'], function(){
             Route::get('/', 'PermintaanController@index')->name('permintaan.index');
             Route::get('create', 'PermintaanController@create')->name('permintaan.create');
             Route::post('create', 'PermintaanController@store')->name('permintaan.store');
+            Route::get('data-permintaan', 'PermintaanController@getDataPermintaan')->name('permintaan.getdata');
+            Route::get('proses/{id}', 'PermintaanController@proses')->name('permintaan.proses');
+            Route::put('update/{id}', 'PermintaanController@update')->name('permintaan.update');
         });
         Route::group(['prefix' => 'stock'], function(){
             Route::get('/', 'StockDarahController@index')->name('stock.index');
@@ -71,6 +74,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             Route::get('data-stock', 'StockDarahController@getdata')->name('stock.getdata');
             // Route::get('change', 'StockDarahController@stockChange')->name('stock.change');
             // Route::post('change', 'StockDarahController@stockChangeUpdate')->name('stock.changeupdate');
+
+            Route::get('laporan', 'StockDarahController@lapDarah')->name('laporan.darah');
         });
     });
     
@@ -82,6 +87,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::put('update/{id}', 'JadwalController@update')->name('jadwal.update');
         Route::get('{id}/delete', 'JadwalController@destroy')->name('jadwal.delete');
         Route::get('data-jadwal', 'JadwalController@getdata')->name('jadwal.getdata');
+        
+        Route::get('laporan', 'JadwalController@lapJadwal')->name('laporan.jadwal');
     });
     
     Route::group(['prefix' => 'pengajuan', 'middleware' => 'auth.isPmi'], function(){
@@ -105,6 +112,21 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             Route::get('show', 'CariDarahController@show')->name('cari.show');
             Route::get('data-darah', 'CariDarahController@getData')->name('cari.getdata');
         });
+        
+        Route::group(['prefix' => 'o'], function(){
+            Route::get('/', 'CariDarahController@index')->name('order.index');
+            Route::get('show', 'CariDarahController@show')->name('order.show');
+            
+            Route::get('edit/{id}', 'PermintaanController@editCheckout')->name('order.editCheckout');
+            Route::put('update/{id}', 'PermintaanController@updateCheckout')->name('order.updateCheckout');
+            Route::get('data-order', 'PermintaanController@getData')->name('order.getdata');
+            Route::get('all', 'PermintaanController@getAll')->name('order.all');
+            Route::get('checkout/{id}','PermintaanController@checkout')->name('order.checkout');
+            Route::post('checkout','PermintaanController@storeCheckout')->name('order.storecheckout');
+            
+            Route::get('create', 'PermintaanController@create')->name('order.create');
+        });
+
     });
 });
 

@@ -187,13 +187,13 @@ class PendonorController extends Controller
 
     public function getdata()
     {
-        // $query = Pendonor::select(['id','user_id','ktp','nama','kabupaten','kecamatan','desa','alamat','jenis_kelamin','tempat_lahir','tanggal_lahir','pekerjaan','nama_ibu','status_nikah','phone','gol_dar','rhesus', 'created_at']);
-        $query = DB::table('pendonor')
-        ->join('kabupaten', 'pendonor.kabupaten', '=', 'kabupaten.id')
-        ->join('kecamatan', 'pendonor.kecamatan', '=', 'kecamatan.id')
-        ->join('desa', 'pendonor.desa', '=', 'desa.id')
-        ->select('pendonor.*', 'kabupaten.nama as nama_kab', 'kecamatan.nama as nama_kec', 'desa.nama as nama_desa')
-        ->get();
+        $query = Pendonor::with(['cek_kabupaten','cek_kecamatan','cek_desa'])->select(['id','user_id','ktp','nama','kabupaten','kecamatan','desa','alamat','jenis_kelamin','tempat_lahir','tanggal_lahir','pekerjaan','nama_ibu','status_nikah','phone','gol_dar','rhesus', 'created_at']);
+        // $query = DB::table('pendonor')
+        // ->join('kabupaten', 'pendonor.kabupaten', '=', 'kabupaten.id')
+        // ->join('kecamatan', 'pendonor.kecamatan', '=', 'kecamatan.id')
+        // ->join('desa', 'pendonor.desa', '=', 'desa.id')
+        // ->select('pendonor.*', 'kabupaten.nama as nama_kab', 'kecamatan.nama as nama_kec', 'desa.nama as nama_desa')
+        // ->get();
 
         return DataTables::of($query)
                 ->editColumn('nama', function ($pendonor) {
@@ -206,7 +206,12 @@ class PendonorController extends Controller
                         return $output;
                     })
                 ->editColumn('alamat', function ($pendonor) {
-                    return ucwords($pendonor->alamat) . ', <br>' . ucwords($pendonor->nama_desa) . ', ' . ucwords($pendonor->nama_kec) . ', ' . ucwords($pendonor->nama_kab);
+                    if($pendonor->kabupaten == NULL){
+                        $output = ucwords($pendonor->alamat);
+                    }else{
+                        $output = ucwords($pendonor->alamat) . ', <br>' . ucwords($pendonor->cek_desa->nama) . ', ' . ucwords($pendonor->cek_kecamatan->nama) . ', ' . ucwords($pendonor->cek_kabupaten->nama);
+                    }
+                    return $output;
                     })
                 ->editColumn('ttl', function ($pendonor) {
                     return ucwords($pendonor->tempat_lahir) . ', ' . $pendonor->tanggal_lahir;

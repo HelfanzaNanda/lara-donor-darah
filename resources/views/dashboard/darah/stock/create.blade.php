@@ -55,11 +55,15 @@
                 </div>
                 <div class="form-group">
                     <label>Jumlah</label>
-                    <input type="text" class="form-control" name="qty_new" placeholder="50">
+                    <input type="text" class="form-control" name="qty" placeholder="50">
+                </div>
+                <div class="form-group">
+                    <label>Harga <small>per kantong</small></label>
+                    <input type="text" class="form-control" name="harga" placeholder="100000 /kantong">
                 </div>
             </div>
             <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success bg-green btn-sm">Simpan</button>
             </div>
         </form>
     </div>

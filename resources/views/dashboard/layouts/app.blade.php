@@ -66,8 +66,8 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Laporan <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Jadwal Donor</a></li>
-                <li><a href="#">Pengajuan Donor</a></li>
+                <li><a href="{{route('laporan.darah')}}">Laporan Darah</a></li>
+                <li><a href="{{route('laporan.jadwal')}}">Laporan Jadwal</a></li>
               </ul>
             </li>
             <li class="{{ Route::currentRouteName() == 'user.index' ? 'active' : ''}}">
@@ -78,8 +78,8 @@
             <li class="{{ Route::currentRouteName() == 'cari.index' ? 'active' : ''}}">
               <a href="{{route('cari.index')}}">Cari Darah</a>
             </li>
-            <li class="{{ Route::currentRouteName() == 'order.index' ? 'active' : '' }}">
-              <a href="#">Pesan Darah</a>
+            <li class="{{ Route::currentRouteName() == 'order.all' ? 'active' : '' }}">
+              <a href="{{route('order.all')}}">Pesan Darah</a>
             </li>
             @endif
           </ul>

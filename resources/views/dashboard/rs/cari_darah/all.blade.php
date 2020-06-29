@@ -8,15 +8,22 @@
             <div class="form-group pull-left" style="margin-top: 0px; width:100px; margin-right:10px;">
                 <select name="" class="form-control">
                     <option value="">Gol Darah</option>
-                    <option value="">asdas</option>
-                    <option value="">asdas</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
                 </select>
             </div>
             <div class="form-group pull-left" style="margin-top: 0px; width:150px; margin-right:10px;">
                 <select name="" class="form-control">
                     <option value="">Jenis Tranfusi</option>
-                    <option value="">asdas</option>
-                    <option value="">asdas</option>
+                    <option value="Fresh Frozen Plasma">Fresh Frozen Plasma</option>
+                    <option value="Leucodepleted">Leucodepleted</option>
+                    <option value="Leucoreduced">Leucoreduced</option>
+                    <option value="Packed Red Cell">Packed Red Cell</option>
+                    <option value="Trombocyte Concentrate">Trombocyte Concentrate</option>
+                    <option value="TC Apheresis">TC Apheresis</option>
+                    <option value="Whole Blood">Whole Blood</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-success btn-sm bg-green pull-left" data-toggle="modal" data-target="#import"> <span class="fa fa-search"> </span> Cari</button>
@@ -52,6 +59,7 @@
                     <th width="150">Golongan Darah</th>
                     <th>Jenis Tranfusi</th>
                     <th>Jumlah Stok</th>
+                    <th>Harga</th>
                     <th width="200">Action</th>
                     </tr>
                 </thead>
@@ -102,6 +110,7 @@
             { data: 'gol_dar', name: 'gol_dar' },
             { data: 'jenis_tranfusi', name: 'jenis_tranfusi' },
             { data: 'qty', name: 'qty' },
+            { data: 'harga', name: 'harga' },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
       });

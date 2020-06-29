@@ -35,7 +35,7 @@ class CariDarahController extends Controller
 
     public function getData()
     {
-        $query = StockDarah::select(['id','gol_dar', 'jenis_tranfusi', 'rhesus', 'qty', 'created_at']);
+        $query = StockDarah::select(['id','gol_dar', 'jenis_tranfusi', 'rhesus', 'qty', 'harga', 'created_at']);
         // $query = DB::table('stock_darah')
         // ->join('kabupaten', 'pendonor.kabupaten', '=', 'kabupaten.id')
         // ->join('kecamatan', 'pendonor.kecamatan', '=', 'kecamatan.id')
@@ -53,13 +53,14 @@ class CariDarahController extends Controller
                 ->editColumn('qty', function ($stock){
                     return $stock->qty;
                 })
-                ->editColumn('action', function ($stock) {
-                    return '<a href="' . route('stock.edit',$stock->id) . '" class="btn btn-primary btn-xs bg-blue">
-                    <span class="fa fa-pencil" style="margin-right:5px;"> </span> Edit Stok</a> | 
-                    <a type="javascript:;" data-toggle="modal" data-target="#konfirmasi_hapus" class="btn btn-danger btn-xs bg-red" data-href="' . route('stock.delete',['id'=>$stock->id]) . '" title="Delete"> 
-                    <span class="fa fa-trash" style="margin-left:5px;"> </span> Hapus</a>';
+                ->editColumn('harga', function ($stock){
+                    return 'Rp. '.$stock->harga;
                 })
-                ->rawColumns(['gol_dar','jenis_tranfusi','action'])
+                ->editColumn('action', function ($stock) {
+                    return '<a href="' . route('order.checkout',$stock->id) . '" class="btn btn-primary btn-xs bg-blue">
+                    <span class="fa fa-external-link" style="margin-right:5px;"> </span> Order Darah</a>';
+                })
+                ->rawColumns(['gol_dar','jenis_tranfusi','qty','harga','action'])
                 ->addIndexColumn()
                 ->make(true);
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use DataTables;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class JadwalController extends Controller
 {
@@ -48,12 +50,11 @@ class JadwalController extends Controller
 
 
         
-        if($valid == true){
-            $resorce       = $request->file('foto');
-            $ekstensi_foto   = $resorce->getClientOriginalExtension();
-            $nama_foto = $resorce . "." . $ekstensi_foto;
-            $path       = 'public/jadwal/'.$nama_foto;
-            $resorce->move($path);
+        if($valid == true){            
+            //cek foto
+            $cover = $request->file('foto');
+            $extension = $cover->getClientOriginalExtension();
+            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
             
             $data_jadwal = new Jadwal([
                 'nama_tempat' => $request->get('nama_tempat'),
@@ -62,7 +63,7 @@ class JadwalController extends Controller
                 'jam_mulai' => $request->get('jam_mulai'),
                 'jam_selesai' => $request->get('jam_selesai'),
                 'alamat' => $request->get('alamat'),
-                'foto' => $nama_foto
+                'foto' => $cover->getFilename().'.'.$extension,
             ]);
             
             $data_jadwal->save();
@@ -156,5 +157,10 @@ class JadwalController extends Controller
                 ->rawColumns(['nama','hari_tanggal','waktu','alamat','action'])
                 ->addIndexColumn()
                 ->make(true);
+    }
+
+    public function lapJadwal()
+    {
+        return view('dashboard.laporan.jadwal');
     }
 }

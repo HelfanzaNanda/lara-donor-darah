@@ -18,9 +18,9 @@ class CreatePendonorTable extends Migration
             $table->integer('user_id')->nullable();
             $table->string('ktp', 35);
             $table->string('nama', 30);
-            $table->string('kabupaten', 30);
-            $table->string('kecamatan', 30);
-            $table->string('desa', 30);
+            $table->string('kabupaten', 30)->nullable();
+            $table->string('kecamatan', 30)->nullable();
+            $table->string('desa', 30)->nullable();
             $table->text('alamat');
             $table->string('jenis_kelamin',10);
             $table->string('tempat_lahir',25);

@@ -8,6 +8,6 @@ class Jadwal extends Model
 {
     protected $table = 'jadwal';
     protected $fillable = [
-        'nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat','foto'
+        'user_id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat','foto', 'status'
     ];
 }

@@ -18,7 +18,7 @@
             </ul>
         </div>
         @endif
-        <form method="post" action="{{route('informasi.create')}}">
+        <form method="post" action="{{route('informasi.create')}}"  enctype="multipart/form-data">
         @csrf
             <div class="box-body">
                 <div class="form-group">
@@ -26,8 +26,10 @@
                     <input type="text" class="form-control" name="title" placeholder="Masukkan Title">
                 </div>
                 <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" class="form-control" name="image" placeholder="Masukkan Title">
+                    <div id="image-preview" style="width:200px;">
+                        <label for="image-upload" id="image-label" style="color:#f0f0f0;">Choose File</label>
+                        <input type="file" name="foto" id="image-upload" />
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Kategori</label>
@@ -51,9 +53,59 @@
 
 @push('header')
 <link rel="stylesheet" href="/assets/material/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+<style>
+    /** Image preview */
+#image-preview {
+    width: 100%;
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+    background-color: #e6ecf3;
+    color: #4a5152;
+    border: 2px dashed #ccc;
+    border-radius: 2px;
+}
+#image-preview input {
+    line-height: 150px;
+    font-size: 18px;
+    position: absolute;
+    opacity: 0;
+    z-index: 10;
+}
+#image-preview label {
+    position: absolute;
+    z-index: 5;
+    opacity: 0.8;
+    cursor: pointer;
+    background-color: #bdc3c7;
+    width: 110px;
+    height: 40px;
+    font-size: 12px;
+    line-height: 3.4em;
+    text-transform: uppercase;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+}
+</style>
 @endpush
 
 @push('footer')
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.uploadPreview.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $.uploadPreview({
+        input_field: "#image-upload",
+        preview_box: "#image-preview",
+        label_field: "#image-label"
+    });
+});
+</script>
 <script src="/assets/material/ckeditor/ckeditor.js"></script>
 <script>
   $(function () {
