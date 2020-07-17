@@ -30,12 +30,12 @@
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="150">Pasien</th>
+                    <th>Pasien</th>
                     <th>Golongan Darah</th>
-                    <th>Jumlah</th>
-                    <th>Status</th>
-                    <th>Pembayaran</th>
-                    <th width="200">Action</th>
+                    <th width="80">Jumlah</th>
+                    <th width="120">Status</th>
+                    <th width="120">Pembayaran</th>
+                    <th width="30">Action</th>
                     </tr>
                 </thead>
             </table>
@@ -82,11 +82,11 @@
         ajax: '{!! route('order.getdata') !!}',
         columns: [
             { data: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'pasien', name: 'pasien' },
-            { data: 'gol_dar', name: 'jenis_tranfusi' },
-            { data: 'qty', name: 'qty' },
-            { data: 'status', name: 'status' },
-            { data: 'pembayaran', name: 'pembayaran' },
+            { data: 'pasien', name: 'pasien' , orderable: false, searchable: false },
+            { data: 'gol_dar', name: 'jenis_tranfusi' , orderable: false, searchable: false },
+            { data: 'qty', name: 'qty' , orderable: false, searchable: false },
+            { data: 'status', name: 'status' , orderable: false, searchable: false },
+            { data: 'pembayaran', name: 'pembayaran' , orderable: false, searchable: false },
             { data: 'action', name: 'action', orderable: false, searchable: false }
         ]
       });

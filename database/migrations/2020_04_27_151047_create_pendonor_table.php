@@ -27,7 +27,7 @@ class CreatePendonorTable extends Migration
             $table->string('tanggal_lahir',10);
             $table->string('pekerjaan',25);
             $table->string('nama_ibu',30);
-            $table->string('status_nikah', 12);
+            $table->string('status_nikah', 20);
             $table->string('phone', 30);
             $table->string('gol_dar', 2);
             $table->string('rhesus', 1);

@@ -33,18 +33,24 @@
                 </div>
                 <div class="form-group">
                     <label>Kategori</label>
-                    <input type="text" class="form-control" name="kategori" placeholder="Password">
+                    <select name="kategori" class="form-control" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="informasi">Informasi</option>
+                        <option value="berita">Berita</option>
+                    </select>
+                    <!-- <input type="text" class="form-control" name="kategori" placeholder="Ka"> -->
                 </div>
                 <div class="form-group">
                     <label>Konten</label>
-                    <div class="box-body pad">
-                        <textarea id="editor1" name="content" class="textarea" placeholder="Place some text here"
+                    <textarea id="editor1" name="content" class="textarea" placeholder="Place some text here"
                                 style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                    </div>
+                    <!-- <div class="box-body pad">
+                    </div> -->
                 </div>
             </div>
             <div class="box-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-success bg-green">Simpan</button>
+            <a href="{{url()->previous()}}" class="btn btn-danger bg-red">Cancel</a>
             </div>
         </form>
     </div>

@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="row">
-    <div class="box">
+    <!-- <div class="box">
         <div class="box-header">
             <div class="form-group pull-left" style="margin-top: 0px; width:100px; margin-right:10px;">
                 <select name="" class="form-control">
@@ -28,7 +28,7 @@
             </div>
             <button type="submit" class="btn btn-success btn-sm bg-green pull-left" data-toggle="modal" data-target="#import"> <span class="fa fa-search"> </span> Cari</button>
         </div>
-    </div>
+    </div> -->
     <div class="box">
         <div class="box-header">
         <!-- Horizontal Form -->

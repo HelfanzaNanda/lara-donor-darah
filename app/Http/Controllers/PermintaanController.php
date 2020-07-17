@@ -337,7 +337,7 @@ class PermintaanController extends Controller
                 })
                 ->editColumn('action', function ($order) {
                     return '<a href="'.route('order.editCheckout', $order->id).'" class="btn btn-primary btn-xs bg-blue">
-                    <span class="fa fa-external-link" style="margin-right:5px;"> </span> Order Darah</a>';
+                    <span class="fa fa-eye" style="margin-right:5px;"> </span></a>';
                 })
                 ->rawColumns(['pasien','gol_dar','qty','status','pembayaran','action'])
                 ->addIndexColumn()
