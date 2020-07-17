@@ -15,7 +15,7 @@ class AddStatusToOrders extends Migration
     {
         Schema::table('jadwal', function (Blueprint $table) {
             $table->integer('user_id')->nullable()->after('id');
-            $table->string('status', 10)->after('alamat');
+            $table->string('status', 10)->nullable()->after('alamat');
         });
     }
 
