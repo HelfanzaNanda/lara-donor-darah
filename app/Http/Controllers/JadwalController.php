@@ -7,6 +7,7 @@ use App\Models\Jadwal;
 use DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use PDF;
 
 class JadwalController extends Controller
 {
@@ -120,7 +121,8 @@ class JadwalController extends Controller
             $jadwal->tanggal = $request->tanggal;
             $jadwal->jam_mulai = $request->jam_mulai;
             $jadwal->jam_selesai = $request->jam_selesai;
-            $jadwal->alamat = $request->alamat;            
+            $jadwal->alamat = $request->alamat;  
+            $jadwal->status = $request->status;
             $jadwal->save();
             
             return redirect()->route('jadwal.index')->with('success','Jadwal berhasil diubah.');
@@ -136,7 +138,7 @@ class JadwalController extends Controller
 
     public function getdata()
     {
-        $query = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'created_at']);
+        $query = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status',null);
 
         return DataTables::of($query)
                 ->editColumn('nama', function ($jadwal) {
@@ -161,6 +163,23 @@ class JadwalController extends Controller
 
     public function lapJadwal()
     {
-        return view('dashboard.laporan.jadwal');
+        $data['jadwal_selesai'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','selesai')->get();
+        $data['jadwal_batal'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','batal')->get();
+        
+        return view('dashboard.laporan.jadwal',$data);
+    }
+    
+    public function cetak_jadwal_selesai()
+    {
+        $selesai = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','selesai')->get();
+        $pdf = PDF::loadview('dashboard.laporan.jadwal_selesai_pdf',['selesai'=>$selesai]);
+        return $pdf->stream();
+    }
+    
+    public function cetak_jadwal_batal()
+    {
+        $batal = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','batal')->get();
+        $pdf = PDF::loadview('dashboard.laporan.jadwal_batal_pdf',['batal'=>$batal]);
+        return $pdf->stream();
     }
 }

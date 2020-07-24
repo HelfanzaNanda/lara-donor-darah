@@ -46,6 +46,18 @@
         </div>
     </div>
 </div>
+<!--/.col (right) -->
+<div class="modal fade" id="konfirmasi_hapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+     <div class="modal-content">
+      <div class="modal-body text-center">
+       <b>Anda yakin ingin menghapus Permanen data ini ?</b>
+       <br><br>
+       <a class="btn btn-danger btn-ok"> Hapus</a><button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-close"></i> Batal</button>
+     </div>
+   </div>
+ </div>
+</div>
 @endsection
 
 

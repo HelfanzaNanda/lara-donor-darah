@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Information;
 use App\Models\Jadwal;
+use App\Models\Pengajuan;
 use App\Models\StockDarah;
 use App\Models\Pendonor;
 use Illuminate\Support\Facades\Storage;
@@ -150,7 +151,32 @@ class APIController extends Controller
 
     public function getInformation(Request $request)
     {
-        $getInformation = Information::all();
+        $getInformation = Information::where('kategori','informasi')->get();
+        if($getInformation){
+            $result["read"] = [];
+            foreach($getInformation as $u){
+                $data = [
+                    "id" => $u->id,
+                    "title" => $u->title,
+                    "image" => url('/uploads/'.$u->image),
+                    "kategori" => $u->kategori,
+                    "content" => $u->content,
+                ];
+                array_push($result["read"],$data);
+            }
+                $result["success"] = "1";
+                $result["message"] = "success";
+                echo json_encode($result);
+        }else{
+            $result["success"] = "0";
+            $result["message"] = "error";
+            echo json_encode($result);
+        }
+    }
+
+    public function getBerita(Request $request)
+    {
+        $getInformation = Information::where('kategori','berita')->get();
         if($getInformation){
             $result["read"] = [];
             foreach($getInformation as $u){
@@ -331,7 +357,7 @@ class APIController extends Controller
 
     public function createPengajuan(Request $request)
     {
-        $data_jadwal = Jadwal::create([
+        $data_jadwal = Pengajuan::create([
             'user_id' => $request->user_id,
             'nama_tempat' => $request->nama_tempat,
             'hari' => $request->hari,
@@ -339,8 +365,8 @@ class APIController extends Controller
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'alamat' => $request->alamat,
-            'foto' => $request->foto,
-            'status' => $request->status,
+            'penanggung_jawab' => $request->penanggung_jawab,
+            'status' => 'pending',
         ]);
         
         if($data_jadwal){
@@ -357,7 +383,7 @@ class APIController extends Controller
     public function getPengajuan(Request $request)
     {
         $user_id = $request->user_id;
-        $query = Jadwal::where('user_id',$user_id)->get();
+        $query = Pengajuan::where('user_id',$user_id)->where('status', '!=', 'diterima')->get();
         if($query){
             $result["read"] = [];
             foreach($query as $u){
@@ -370,8 +396,9 @@ class APIController extends Controller
                     'jam_mulai' => $u->jam_mulai,
                     'jam_selesai' => $u->jam_selesai,
                     'alamat' => $u->alamat,
-                    'foto' => $u->foto,
-                    'status' => $u->status,
+                    'penanggung_jawab' => $u->penanggung_jawab,
+                    'foto' => url('/uploads/'.$u->foto),
+                    'status' => ucwords($u->status),
                 ];
                 array_push($result["read"],$data);
             }
@@ -384,4 +411,43 @@ class APIController extends Controller
             echo json_encode($result);
         }
     }
+
+    public function updatePengajuan(Request $request)
+    {
+        $pengajuan = Pengajuan::find($request->id);
+        $pengajuan->user_id = $request->user_id;
+        $pengajuan->nama_tempat = $request->nama_tempat;
+        $pengajuan->hari = $request->hari;
+        $pengajuan->tanggal = $request->tanggal;
+        $pengajuan->jam_mulai = $request->jam_mulai;
+        $pengajuan->jam_selesai = $request->jam_selesai;
+        $pengajuan->alamat = $request->alamat;
+        $pengajuan->penanggung_jawab = $request->penanggung_jawab;
+        $pengajuan->save();
+        
+        if($pengajuan){
+            $result["success"] = "1";
+            $result["message"] = "success";
+            echo json_encode($result);
+        }else{
+            $result["success"] = "0";
+            $result["message"] = "error";
+            echo json_encode($result);
+        }
+    }
+
+    public function deletePengajuan(Request $request)
+    {
+        $id = $request->id;
+        $delete = Pengajuan::where('id',$id)->delete();
+        if($delete){
+            $result["success"] = "true";
+            $result["message"] = "success";
+            echo json_encode($result);
+        }else{
+            $result["success"] = "false";
+            $result["message"] = "Failed";
+            echo json_encode($result);
+        }
+    }    
 }

@@ -83,18 +83,21 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::get('/', 'JadwalController@index')->name('jadwal.index');
         Route::get('create', 'JadwalController@create')->name('jadwal.create');
         Route::post('create', 'JadwalController@store')->name('jadwal.store');
+        Route::get('show/{id}', 'JadwalController@show')->name('jadwal.show');
         Route::get('edit/{id}', 'JadwalController@edit')->name('jadwal.edit');
         Route::put('update/{id}', 'JadwalController@update')->name('jadwal.update');
         Route::get('{id}/delete', 'JadwalController@destroy')->name('jadwal.delete');
         Route::get('data-jadwal', 'JadwalController@getdata')->name('jadwal.getdata');
         
         Route::get('laporan', 'JadwalController@lapJadwal')->name('laporan.jadwal');
+        Route::get('jadwal-selesai', 'JadwalController@cetak_jadwal_selesai')->name('jadwal.selesai');
+        Route::get('jadwal-batal', 'JadwalController@cetak_jadwal_batal')->name('jadwal.batal');
     });
     
     Route::group(['prefix' => 'pengajuan', 'middleware' => 'auth.isPmi'], function(){
         Route::get('/', 'PengajuanController@index')->name('pengajuan.index');
-        Route::get('create', 'PengajuanController@create')->name('pengajuan.create');
-        Route::post('create', 'PengajuanController@store')->name('pengajuan.store');
+        Route::get('edit/{id}', 'PengajuanController@edit')->name('pengajuan.edit');
+        Route::put('update/{id}', 'PengajuanController@update')->name('pengajuan.update');
     });
 
     Route::group(['prefix' => 'user', 'middleware' => 'auth.isPmi'], function(){

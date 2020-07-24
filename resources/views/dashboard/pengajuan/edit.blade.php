@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.app')
-@section('title', 'Jadwal')
+@section('title', 'Pengajuan Jadwal')
 
 @section('content')
 <div class="row">
@@ -37,11 +37,11 @@
                 </ul>
             </div>
             @endif
-            <form method="post" action="{{route('jadwal.update', $jadwal->id)}}">
+            <form method="post" action="{{route('pengajuan.update', $pengajuan->id)}}">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
                 <div class="box-body">
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-sm-3" style="margin-top: 0px;">
                             <div class="form-group" style="margin-top:0px;">
                                 <label style="margin-bottom:10px;">Foto Lokasi</label>
@@ -51,34 +51,31 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group" style="margin-top:0px;">
-                        <label>Nama Lokasi</label>
-                        <input type="text" class="form-control" name="nama_tempat" placeholder="Kantor Kecamatan Tarub" value="{{$jadwal->nama_tempat}}">
+                        <label>Nama Tempat</label>
+                        <input type="text" class="form-control" name="nama_tempat" placeholder="Kantor Kecamatan Tarub" value="{{$pengajuan->nama_tempat}}" readonly="true">
                     </div>
-                    <div class="form-group" style="margin-top:10px;">
-                        <label>Hari</label>
-                        <select name="hari" class="form-control">
-                            <option value="">Pilih Hari</option>
-                            <option value="Senin" {{ "Senin" == $jadwal->hari ? 'selected' : '' }}>Senin</option>
-                            <option value="Selasa" {{ "Selasa" == $jadwal->hari ? 'selected' : '' }}>Selasa</option>
-                            <option value="Rabu" {{ "Rabu" == $jadwal->hari ? 'selected' : '' }}>Rabu</option>
-                            <option value="Kamis" {{ "Kamis" == $jadwal->hari ? 'selected' : '' }}>Kamis</option>
-                            <option value="Jumat" {{ "Jum" == $jadwal->hari ? 'selected' : '' }}>Jum'at</option>
-                            <option value="Sabtu" {{ "Sabtu" == $jadwal->hari ? 'selected' : '' }}>Sabtu</option>
-                            <option value="Minggu" {{ "Minggu" == $jadwal->hari ? 'selected' : '' }}>Minggu</option>
-                        </select>
-                    </div>
-                    <div class="form-group" style="margin-top:0px;">
-                        <label>Tanggal</label>
-                        <input type="text" class="form-control datepicker" name="tanggal" placeholder="082328321344" value="{{$jadwal->tanggal}}">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group" style="margin-top:0px;">
+                                <label>Hari</label>
+                                <input type="text" class="form-control" name="hari" placeholder="Kantor Kecamatan Tarub" value="{{$pengajuan->hari}}" readonly="true">
+                            </div>                        
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group" style="margin-top:0px;">
+                                <label>Tanggal</label>
+                                <input type="text" class="form-control datepicker" name="tanggal" placeholder="082328321344" value="{{$pengajuan->tanggal}}" readonly="true">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="bootstrap-timepicker">
                                 <div class="form-group" style="margin-top:0px;">
                                     <label>Jam Mulai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_mulai" placeholder="08:00" value="{{$jadwal->jam_mulai}}">
+                                    <input type="text" class="form-control" name="jam_mulai" placeholder="08:00" value="{{$pengajuan->jam_mulai}}" readonly="true">
                                 </div>
                             </div>
                         </div>
@@ -86,21 +83,21 @@
                             <div class="bootstrap-timepicker">
                                 <div class="form-group" style="margin-top:0px;">
                                     <label>Jam Selesai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_selesai" placeholder="12:00"  value="{{$jadwal->jam_selesai}}">
+                                    <input type="text" class="form-control" name="jam_selesai" placeholder="12:00"  value="{{$pengajuan->jam_selesai}}" readonly="true">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group" style="margin-top:0px;">
                         <label>Alamat</label>
-                        <textarea class="form-control" rows="3" name="alamat" placeholder="Jalan Mawar Merah No 69">{{$jadwal->alamat}}</textarea>
+                        <textarea class="form-control" rows="3" name="alamat" placeholder="Jalan Mawar Merah No 69" readonly="true">{{$pengajuan->alamat}}</textarea>
                     </div>
-                    <div class="form-group" style="margin-top:10px;">
+                    <div class="form-group" style="margin-top:0px;">
                         <label>Status</label>
                         <select name="status" class="form-control">
-                            <option value="">Pilih Status</option>
-                            <option value="selesai" {{ $jadwal->status == 'selesai' ? 'selected' : '' }}>Senin</option>
-                            <option value="batal" {{ $jadwal->status == 'batal' ? 'selected' : '' }}>Selasa</option>
+                            <option value="pending" {{$pengajuan->status == 'pengajuan' ? 'selected':''}}>Pending</option>
+                            <option value="diterima" {{$pengajuan->status == 'diterima' ? 'selected':''}}>Setuju</option>
+                            <option value="ditolak" {{$pengajuan->status == 'ditolak' ? 'selected':''}}>Tolak</option>
                         </select>
                     </div>
                 </div>

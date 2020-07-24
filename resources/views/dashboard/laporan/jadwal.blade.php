@@ -4,28 +4,11 @@
 @section('content')
 <div class="row">
     <div class="box">
-        <div class="box-header">
-        <!-- Horizontal Form -->
-        @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
-        <strong>{{ $message }}</strong>
-        </div>
-        @endif
-        @if ($message = Session::get('message'))
-        <div class="alert alert-warning alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
-        <strong>{{ $message }}</strong>
-        </div>
-        @endif
-        @if ($message = Session::get('error'))
-        <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
-        <strong>{{ $message }}</strong>
-        </div>
-        @endif
+        <div class="box-header" style="margin-bottom:0px;">
+          <h4 class="text-center" style="margin-bottom:0px;"><b>Jadwal Selesai</b></h4>
         </div>
         <div class="box-body">
+            <a href="{{route('jadwal.selesai')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a>
             <table id="jadwal-table" class="table table-bordered table-striped" style="width:100%!important;">
                 <thead>
                     <tr>
@@ -34,9 +17,49 @@
                     <th>Hari, Tanggal</th>
                     <th>Waktu</th>
                     <th>Alamat</th>
-                    <th width="200">Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                  @foreach($jadwal_selesai as $js)
+                    <tr>
+                    <th width="10">{{$loop->iteration}}</th>
+                    <th width="150">{{$js->nama_tempat}}</th>
+                    <th>{{$js->hari}}, {{$js->tanggal}}</th>
+                    <th>{{$js->jam_mulai}} - {{$js->jam_selesai}}</th>
+                    <th>{{$js->alamat}}</th>
+                    </tr>
+                  @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="box">
+    <div class="box-header" style="margin-bottom:0px;">
+          <h4 class="text-center" style="margin-bottom:0px;"><b>Jadwal Batal</b></h4>
+        </div>
+        <div class="box-body">
+            <a href="{{route('jadwal.batal')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a>
+            <table id="jadwal-table" class="table table-bordered table-striped" style="width:100%!important;">
+                <thead>
+                    <tr>
+                    <th width="10">No</th>
+                    <th width="150">Nama Lokasi</th>
+                    <th>Hari, Tanggal</th>
+                    <th>Waktu</th>
+                    <th>Alamat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach($jadwal_batal as $jb)
+                    <tr>
+                    <th width="10">{{$loop->iteration}}</th>
+                    <th width="150">{{$jb->nama_tempat}}</th>
+                    <th>{{$jb->hari}}, {{$jb->tanggal}}</th>
+                    <th>{{$jb->jam_mulai}} - {{$jb->jam_selesai}}</th>
+                    <th>{{$jb->alamat}}</th>
+                    </tr>
+                  @endforeach
+                </tbody>
             </table>
         </div>
     </div>

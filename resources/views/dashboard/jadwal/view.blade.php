@@ -95,14 +95,6 @@
                         <label>Alamat</label>
                         <textarea class="form-control" rows="3" name="alamat" placeholder="Jalan Mawar Merah No 69">{{$jadwal->alamat}}</textarea>
                     </div>
-                    <div class="form-group" style="margin-top:10px;">
-                        <label>Status</label>
-                        <select name="status" class="form-control">
-                            <option value="">Pilih Status</option>
-                            <option value="selesai" {{ $jadwal->status == 'selesai' ? 'selected' : '' }}>Senin</option>
-                            <option value="batal" {{ $jadwal->status == 'batal' ? 'selected' : '' }}>Selasa</option>
-                        </select>
-                    </div>
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-primary btn-sm bg-purple">Reset</button>

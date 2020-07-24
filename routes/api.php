@@ -25,10 +25,13 @@ Route::post('/user-upload', 'APIController@upload');
 
 
 Route::get('/information-show', 'APIController@getInformation');
+Route::get('/berita-show', 'APIController@getBerita');
 
 Route::get('/jadwal-show', 'APIController@getJadwal');
 Route::post('/pengajuan-add', 'APIController@createPengajuan');
 Route::post('/pengajuan-show', 'APIController@getPengajuan');
+Route::post('/pengajuan-update', 'APIController@updatePengajuan');
+Route::post('/pengajuan-delete', 'APIController@deletePengajuan');
 
 Route::get('/stock-show', 'APIController@getStockDarah');
 

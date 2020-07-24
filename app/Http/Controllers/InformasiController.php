@@ -65,24 +65,68 @@ class InformasiController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        //
-    }
-
     public function edit($id)
     {
-        //
+        $data['info'] = Information::find($id);
+
+        return view('dashboard.informasi.edit',$data);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $messages = [
+            'required' => ':attribute tidak boleh kosong.',
+            'regex'    => ':attribute harus berupa karakter alphabet.'
+        ];
+
+        $customAttributes = [
+            'title' => 'Judul',
+            'image' => 'Gambar',
+            'kategori' => 'Kategori',
+            'content' => 'Konten',
+        ];
+
+        $valid = $request->validate([
+            'title' => 'required',
+            // 'image' => 'required',
+            'kategori' => 'required',
+            'content' => 'required'
+        ],$messages,$customAttributes);
+
+        if($valid == true){            
+            //cek foto
+            if($request->foto != null){
+                $cover = $request->file('foto');
+                $extension = $cover->getClientOriginalExtension();
+    
+                Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+    
+                $informasi = Information::find($id);
+                $informasi->title = $request->get('title');
+                $informasi->image = $cover->getFileName().'.'.$extension;
+                $informasi->kategori = $request->get('kategori');
+                $informasi->content = $request->get('content');
+                $informasi->save();
+            }else{
+                $informasi = Information::find($id);
+                $informasi->title = $request->get('title');
+                $informasi->kategori = $request->get('kategori');
+                $informasi->content = $request->get('content');
+                $informasi->save();
+            }
+            
+            return redirect()->route('informasi.index')->with('success','Informasi berhasil diubah.');
+        }
+        else {
+            return redirect()->back()->withInput();
+        }
     }
 
     public function destroy($id)
     {
-        //
+        $info = Information::find($id);
+        $info->delete();
+        return redirect()->route('informasi.index');
     }
 
     public function getData()

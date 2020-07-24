@@ -3,11 +3,6 @@
 
 @section('content')
 <div class="row">
-<div class="box">
-        <div class="box-header">
-            <a href="#" class="btn btn-secondary bg-green btn-sm pull-left" style="margin-top: 0px; margin-bottom: 0px;"><i class="fa fa-plus" aria-hidden="true"></i> Tambah Informasi</a>
-        </div>
-    </div>
     <div class="box">
         <div class="box-header">
         <!-- Horizontal Form -->
@@ -35,13 +30,27 @@
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="100">Kode</th>
-                    <th>Nama Akun</th>
-                    <th>Kategori</th>
-                    <th width="120">Biaya</th>
-                    <th width="100">Action</th>
+                    <th width="200">Nama Tempat</th>
+                    <th>Hari/Tanggal</th>
+                    <th width="150">Waktu</th>
+                    <th width="250">Alamat</th>
+                    <th width="200">Penanggung Jawab</th>
+                    <th width="60">Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach($pengajuan as $p)
+                    <tr>
+                        <th width="10">{{$loop->iteration}}</th>
+                        <th width="200">{{$p->nama_tempat}}</th>
+                        <th>{{$p->hari}}, {{$p->tanggal}}</th>
+                        <th width="150">{{$p->jam_mulai}} - {{$p->jam_selesai}}</th>
+                        <th width="250">{{$p->alamat}}</th>
+                        <th width="200">{{$p->penanggung_jawab}}</th>
+                        <th width="60"><a href="{{route('pengajuan.edit',$p->id)}}" class="btn btn-primary bg-blue btn-xs"><span class="fa fa-pencil"></span> Edit</a></th>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
