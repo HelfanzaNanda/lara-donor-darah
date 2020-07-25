@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengajuan;
 use App\Models\Jadwal;
+use App\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifPengajuan;
 
 class PengajuanController extends Controller
 {
@@ -39,6 +42,10 @@ class PengajuanController extends Controller
             
             $data_jadwal->save();
         }
+        
+        $user = User::find($pengajuan->user_id);
+        Mail::to($user->email)->send(new NotifPengajuan($user, $pengajuan));
+
         return redirect()->route('pengajuan.index');
     }
 }

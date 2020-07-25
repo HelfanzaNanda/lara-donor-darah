@@ -19,4 +19,10 @@ class Pengajuan extends Model
         'penanggung_jawab',
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
+    
 }

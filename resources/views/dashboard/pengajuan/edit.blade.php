@@ -100,6 +100,10 @@
                             <option value="ditolak" {{$pengajuan->status == 'ditolak' ? 'selected':''}}>Tolak</option>
                         </select>
                     </div>
+                    <div class="form-group" style="margin-top:0px;">
+                        <label>Email</label>
+                        <input type="text" class="form-control" name="jam_selesai" placeholder="12:00"  value="{{$pengajuan->user->email}}" readonly="true">
+                    </div>
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-primary btn-sm bg-purple">Reset</button>
