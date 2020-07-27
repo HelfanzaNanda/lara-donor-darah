@@ -499,5 +499,37 @@ class KabupatenKecamatanSeed extends Seeder
         $payload = ['kecamatan_id' => '18','nama' => 'Sukareja'];Desa::firstOrCreate($payload);
         $payload = ['kecamatan_id' => '18','nama' => 'Warureja'];Desa::firstOrCreate($payload);
 
+        
+        $payload = ['kecamatan_id' => '19','nama' => 'Cabawan'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Kaligangsa'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Kalinyamat Kulon'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Krandon'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Margadana'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Pesurungan Lor'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '19','nama' => 'Sumurpanggang'];Desa::firstOrCreate($payload);
+
+        $payload = ['kecamatan_id' => '20','nama' => 'Debong Lor'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Kemandungan'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Kraton'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Muarareja'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Pekauman'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Pesurungan Kidul'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '20','nama' => 'Tegalsari'];Desa::firstOrCreate($payload);
+
+        $payload = ['kecamatan_id' => '21','nama' => 'Bandung'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Debong Kidul'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Debong Kulon'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Debong Tengah'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Kalinyamat Wetan'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Keturen'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Randugunting'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '21','nama' => 'Tunon'];Desa::firstOrCreate($payload);
+
+        $payload = ['kecamatan_id' => '22','nama' => 'Kejambon'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '22','nama' => 'Mangkukusuman'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '22','nama' => 'Mintaragen'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '22','nama' => 'Panggung'];Desa::firstOrCreate($payload);
+        $payload = ['kecamatan_id' => '22','nama' => 'Slerok'];Desa::firstOrCreate($payload);
+
     }
 }
