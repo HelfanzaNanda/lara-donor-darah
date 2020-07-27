@@ -1,9 +1,9 @@
 @component('mail::message')
 # Halo {{ $user->nama }}
 
-Selamat datang.
+Selamat siang.
 
-Dibutuhkan golongan darah {{$goldar->nama}}, bagi pendonor yang bersedia untuk mendonorkan darahnya bisa segera datang ke kantor PMI untuk melakukan donor darah.
+Dibutuhkan golongan darah {{$pendonor->gol_dar}}, bagi pendonor yang bersedia untuk mendonorkan darahnya bisa segera datang ke kantor PMI untuk melakukan donor darah.
 
 Terima kasih,<br>
 {{ config('app.name') }}

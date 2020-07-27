@@ -181,6 +181,7 @@ class PermintaanController extends Controller
     
         if($valid == true){            
             $user_id = auth()->user()->id;
+            $stock = StockDarah::find($request->id);
             $data_permintaan = new Permintaan([
                 'user_id' => $user_id,
                 'darah_id' => $request->get('darah_id'),

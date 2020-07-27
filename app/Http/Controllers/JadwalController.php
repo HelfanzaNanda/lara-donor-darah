@@ -65,6 +65,7 @@ class JadwalController extends Controller
                 'jam_selesai' => $request->get('jam_selesai'),
                 'alamat' => $request->get('alamat'),
                 'foto' => $cover->getFilename().'.'.$extension,
+                // 'status' =>
             ]);
             
             $data_jadwal->save();

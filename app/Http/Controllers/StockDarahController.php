@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\StockDarah;
+use App\Models\Permintaan;
+use DB;
 use DataTables;
+use PDF;
 
 class StockDarahController extends Controller
 {
@@ -145,13 +148,43 @@ class StockDarahController extends Controller
 
     public function stockChangeUpdate()
     {
-        # code...
+        
     }
 
     //Laporan Darah
     public function lapDarah()
     {
-        return view('dashboard.laporan.darah');
+        // $query = Order::select(['status', DB::raw('COUNT(status) AS total')])
+        //             ->where('created_at', '>=', $query_string['from_date'])
+        //             ->where('created_at', '<', $until);
+
+        // if ($user->role == 'cs') {
+        //     $query = $query->where('operator_id', $user->id);
+        // } elseif ($user->role == 'cc') {
+        //     $query = $query->where('cc_id', $user->id);
+        // } elseif ($user->role == 'adv') {
+        //     $query = $query->where('ads_id', $user->id);
+        // }
+
+        // $data = $query->groupBy('status')->get();
+
+        $data['lapDarah'] = Permintaan::select(['darah_id', DB::raw('COUNT(darah_id) AS goldar')])->groupBy('darah_id')->get();
+        // dd($data['lapDarah']);
+        return view('dashboard.laporan.darah',$data);
+    }
+    
+    public function cetak_lapKeluar()
+    {
+        $lapkeluar = Permintaan::select(['darah_id', DB::raw('COUNT(darah_id) AS goldar')])->groupBy('darah_id')->get();
+        $pdf = PDF::loadview('dashboard.laporan.darah_keluar_pdf',['lapkeluar'=>$lapkeluar]);
+        return $pdf->stream();
+    }
+
+    public function cetak_lapMasuk()
+    {
+        $lapmasuk = StockDarah::all();
+        $pdf = PDF::loadview('dashboard.laporan.darah_masuk_pdf',['lapmasuk'=>$lapmasuk]);
+        return $pdf->stream();
     }
 
     public function getDarah()

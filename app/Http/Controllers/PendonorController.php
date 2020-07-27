@@ -7,8 +7,11 @@ use App\Models\Pendonor;
 use App\Models\Kabupaten;
 use App\Models\Kecamatan;
 use App\Models\Desa;
+use App\User;
 use DataTables;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifButuhDarah;
 
 class PendonorController extends Controller
 {
@@ -97,7 +100,11 @@ class PendonorController extends Controller
 
     public function show($id)
     {
-        //
+        $data['pendonor'] = Pendonor::find($id);
+        $data['kabupaten'] = Kabupaten::select(['id','nama'])->get();
+        $data['kecamatan'] = Kecamatan::select(['id','nama'])->get();
+        $data['desa'] = Desa::select(['id','nama'])->get();
+        return view('dashboard.pendonor.view', $data);
     }
 
     public function edit($id)
@@ -199,9 +206,9 @@ class PendonorController extends Controller
                 ->editColumn('nama', function ($pendonor) {
                     $output = '';
                         if($pendonor->jenis_kelamin == 'laki-laki'){
-                            $output = ucwords($pendonor->nama) . '  (<span class="text-green">L</span>)';
+                            $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-green">L</span>)';
                         }else{
-                            $output = ucwords($pendonor->nama) . '  (<span class="text-navy">P</span>)';
+                            $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-navy">P</span>)';
                         }
                         return $output;
                     })
@@ -242,5 +249,16 @@ class PendonorController extends Controller
         // $kecamatan = Kecamatan::select(['kabupaten_id','nama'])->where('kabupaten_id', $id)->get();
         $desa = DB::table("desa")->where("kecamatan_id",$id)->pluck("nama","id");
         return json_encode($desa);
+    }
+
+    public function sendNotif(Request $request)
+    {
+        // $status = $request->status;
+        $pendonor = Pendonor::find($request->user_id);
+        
+        $user = User::find($pendonor->user_id);
+        Mail::to($user->email)->send(new NotifButuhDarah($user, $pendonor));
+
+        return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
     }
 }

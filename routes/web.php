@@ -50,9 +50,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::get('create', 'PendonorController@create')->name('pendonor.create');
         Route::post('create', 'PendonorController@store')->name('pendonor.store');
         Route::get('edit/{id}', 'PendonorController@edit')->name('pendonor.edit');
+        Route::get('show/{id}', 'PendonorController@show')->name('pendonor.show');
         Route::put('edit/{id}', 'PendonorController@update')->name('pendonor.update');
         Route::get('{id}/delete', 'PendonorController@destroy')->name('pendonor.delete');
         Route::get('data-pendonor', 'PendonorController@getdata')->name('pendonor.getdata');
+
+        Route::post('notif-pendonor', 'PendonorController@sendNotif')->name('pendonor.butuhdarah');
     });
     
     Route::group(['prefix' => 'darah', 'middleware' => 'auth.isPmi'], function(){
@@ -76,6 +79,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             // Route::post('change', 'StockDarahController@stockChangeUpdate')->name('stock.changeupdate');
 
             Route::get('laporan', 'StockDarahController@lapDarah')->name('laporan.darah');
+            Route::get('lap-darah-masuk', 'StockDarahController@cetak_lapMasuk')->name('darah.lapmasuk');
+            Route::get('lap-darah-keluar', 'StockDarahController@cetak_lapKeluar')->name('darah.lapkeluar');
         });
     });
     

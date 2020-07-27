@@ -11,6 +11,9 @@ use App\Models\StockDarah;
 use App\Models\Pendonor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendForgotPassword;
 
 class APIController extends Controller
 {
@@ -145,6 +148,18 @@ class APIController extends Controller
             $result["message"] = "error";
             echo json_encode($result);
         }
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $email = $request->email;
+        $id = $request->id;
+        $user = User::where('email',$email)->first();
+
+        $send = Mail::to($user->email)->send(new SendForgotPassword($user));
+        $result["success"] = "1";
+        $result["message"] = "success";
+        echo json_encode($result);
     }
 
     //Json data Informasi

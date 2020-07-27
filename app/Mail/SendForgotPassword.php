@@ -7,20 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifButuhDarah extends Mailable
+class SendForgotPassword extends Mailable
 {
     use Queueable, SerializesModels;
-    protected $data;
 
+    protected $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $pendonor)
+    public function __construct($user)
     {
         $this->data['user'] = $user;
-        $this->data['pendonor'] = $pendonor;
     }
 
     /**
@@ -30,8 +29,8 @@ class NotifButuhDarah extends Mailable
      */
     public function build()
     {
-        return $this->markdown( 'emails.sendNotifButuhDarah' )
-        ->subject( '[' . config('app.name') . '] Notifikasi Dibutuhkan Darah' )
+        return $this->markdown( 'emails.sendForgotPendonor' )
+        ->subject( '[' . config('app.name') . '] Forgot Password' )
         ->with( $this->data );
     }
 }

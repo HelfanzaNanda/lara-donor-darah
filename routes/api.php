@@ -22,6 +22,7 @@ Route::post('/user-login', 'APIController@userLogin');
 Route::post('/user-detail', 'APIController@detailUser');
 Route::post('/user-update', 'APIController@updateUser');
 Route::post('/user-upload', 'APIController@upload');
+Route::post('/forgot-password', 'APIController@forgotPassword');
 
 
 Route::get('/information-show', 'APIController@getInformation');

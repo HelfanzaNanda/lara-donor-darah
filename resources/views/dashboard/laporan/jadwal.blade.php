@@ -13,7 +13,7 @@
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="150">Nama Lokasi</th>
+                    <th>Nama Lokasi</th>
                     <th>Hari, Tanggal</th>
                     <th>Waktu</th>
                     <th>Alamat</th>
@@ -23,7 +23,7 @@
                   @foreach($jadwal_selesai as $js)
                     <tr>
                     <th width="10">{{$loop->iteration}}</th>
-                    <th width="150">{{$js->nama_tempat}}</th>
+                    <th>{{$js->nama_tempat}}</th>
                     <th>{{$js->hari}}, {{$js->tanggal}}</th>
                     <th>{{$js->jam_mulai}} - {{$js->jam_selesai}}</th>
                     <th>{{$js->alamat}}</th>
@@ -43,7 +43,7 @@
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="150">Nama Lokasi</th>
+                    <th>Nama Lokasi</th>
                     <th>Hari, Tanggal</th>
                     <th>Waktu</th>
                     <th>Alamat</th>
@@ -53,7 +53,7 @@
                   @foreach($jadwal_batal as $jb)
                     <tr>
                     <th width="10">{{$loop->iteration}}</th>
-                    <th width="150">{{$jb->nama_tempat}}</th>
+                    <th>{{$jb->nama_tempat}}</th>
                     <th>{{$jb->hari}}, {{$jb->tanggal}}</th>
                     <th>{{$jb->jam_mulai}} - {{$jb->jam_selesai}}</th>
                     <th>{{$jb->alamat}}</th>

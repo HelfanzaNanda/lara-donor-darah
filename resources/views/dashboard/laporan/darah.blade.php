@@ -27,6 +27,7 @@
         <h4 class="text-center"><b>Darah Masuk</b></h4>
         </div>
         <div class="box-body">
+        <a href="{{route('darah.lapmasuk')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a>
             <table id="stock-table" class="table table-bordered table-striped" style="width:100%!important;">
                 <thead>
                     <tr>
@@ -34,8 +35,6 @@
                     <th width="150">Golongan Darah</th>
                     <th>Jenis Tranfusi</th>
                     <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th width="200">Action</th>
                     </tr>
                 </thead>
             </table>
@@ -65,17 +64,26 @@
         <h4 class="text-center"><b>Darah Keluar</b></h4>
         </div>
         <div class="box-body">
-            <table id="stock-table" class="table table-bordered table-striped" style="width:100%!important;">
+        <a href="{{route('darah.lapkeluar')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a>
+            <table id="example1" class="table table-bordered table-striped" style="width:100%!important;">
                 <thead>
                     <tr>
                     <th width="10">No</th>
-                    <th width="150">Golongan Darah</th>
+                    <th>Golongan Darah</th>
                     <th>Jenis Tranfusi</th>
                     <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th width="200">Action</th>
                     </tr>
                 </thead>
+                <tbody>
+                @foreach($lapDarah as $ld)
+                    <tr>
+                    <th>{{$loop->iteration}}</th>
+                    <th>{{$ld->darah->gol_dar}}({{$ld->darah->rhesus}})</th>
+                    <th>{{$ld->darah->jenis_tranfusi}}</th>
+                    <th>{{$ld->goldar}}</th>
+                    </tr>
+                @endforeach
+                </tbody>
             </table>
         </div>
     </div>
@@ -122,11 +130,23 @@
             { data: 'DT_RowIndex', orderable: false, searchable: false },
             { data: 'gol_dar', name: 'gol_dar' },
             { data: 'jenis_tranfusi', name: 'jenis_tranfusi' },
-            { data: 'qty', name: 'qty' },
-            { data: 'harga', name: 'harga' },
-            { data: 'action', name: 'action', orderable: false, searchable: false }
+            { data: 'qty', name: 'qty' }
         ]
       });
     });
   </script>
+  
+<script>
+  $(function () {
+    $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
 @endpush
