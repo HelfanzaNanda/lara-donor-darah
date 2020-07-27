@@ -43,7 +43,7 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>No KTP</label>
-                        <input type="hidden" name="user_id" value="{{$pendonor->user_id}}">
+                        <input type="hidden" name="id_pendonor" value="{{$pendonor->id}}">
                         <input type="text" class="form-control" name="ktp" placeholder="Mulyono" value="{{$pendonor->ktp}}" readonly="true">
                     </div>
                     <div class="form-group">
@@ -172,13 +172,17 @@
                             <option value="-" {{$pendonor->rhesus == "-" ? 'selected' : ''}}>Negatif (-)</option>
                         </select>
                     </div>
+                    @if($pendonor->user_id != null)
                     <div class="form-group">
                         <label>Email</label>
                         <input type="text" class="form-control" name="email" value="{{$pendonor->getUser->email}}" readonly="true">
                     </div>
+                    @endif
                 </div>
                 <div class="box-footer">
+                    @if($pendonor->user_id != null)
                     <button type="submit" class="btn btn-success btn-sm bg-green">Kirim Notifikasi</button>
+                    @endif
                     <a href="{{url()->previous()}}" class="btn btn-success btn-sm bg-danger">Kembali</a>
                 </div>
             </form>

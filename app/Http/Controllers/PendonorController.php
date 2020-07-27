@@ -254,7 +254,7 @@ class PendonorController extends Controller
     public function sendNotif(Request $request)
     {
         // $status = $request->status;
-        $pendonor = Pendonor::find($request->user_id);
+        $pendonor = Pendonor::find($request->id_pendonor);
         
         $user = User::find($pendonor->user_id);
         Mail::to($user->email)->send(new NotifButuhDarah($user, $pendonor));
