@@ -23,11 +23,11 @@
             <div class="box-body">
                 <div class="form-group">
                     <label>Judul</label>
-                    <input type="text" class="form-control" name="title" placeholder="Masukkan Title">
+                    <input type="text" class="form-control" name="title" placeholder="Masukkan Judul">
                 </div>
                 <div class="form-group">
                     <div id="image-preview" style="width:200px;">
-                        <label for="image-upload" id="image-label" style="color:#f0f0f0;">Choose File</label>
+                        <label for="image-upload" id="image-label" style="color:#f0f0f0;">Pilih File</label>
                         <input type="file" name="foto" id="image-upload" />
                     </div>
                 </div>

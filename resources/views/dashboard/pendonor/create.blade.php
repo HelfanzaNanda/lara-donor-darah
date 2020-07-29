@@ -7,19 +7,19 @@
         <!-- Horizontal Form -->
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
         @if ($message = Session::get('message'))
         <div class="alert alert-warning alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
         @if ($message = Session::get('error'))
         <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
@@ -43,11 +43,11 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>No KTP</label>
-                        <input type="text" class="form-control" name="ktp" placeholder="Mulyono">
+                        <input type="text" class="form-control" name="ktp" placeholder="Masukan No KTP">
                     </div>
                     <div class="form-group">
                         <label>Nama Pendonor</label>
-                        <input type="text" class="form-control" name="nama" placeholder="Mulyono">
+                        <input type="text" class="form-control" name="nama" placeholder="Masukan Nama">
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -103,9 +103,9 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Desa</label>
+                                <label>Kelurahan</label>
                                 <select name="desa" class="form-control">
-                                    <option>-- Desa --</option>
+                                    <option>-- Kelurahan --</option>
                                 </select>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                     </div>
                     <div class="form-group">
                         <label>Nama Ibu Kandung</label>
-                        <input type="text" class="form-control" name="nama_ibu" placeholder="Siti Barokah">
+                        <input type="text" class="form-control" name="nama_ibu" placeholder="Nama Ibu">
                     </div>
                     <div class="form-group">
                         <label>Status Menikah</label>
@@ -146,7 +146,7 @@
                     </div>
                     <div class="form-group">
                         <label>Telepon</label>
-                        <input type="text" class="form-control" name="phone" placeholder="082328321344">
+                        <input type="text" class="form-control" name="phone" placeholder="Masukan No Telp">
                     </div>
 
                     <div class="form-group">
@@ -181,7 +181,7 @@
   <!-- daterange picker -->
   <link rel="stylesheet" href="/assets/material/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <link rel="stylesheet" href="/assets/material/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-  <link rel="stylesheet" href="/assets/material/plugins/iCheck/all.css">  
+  <link rel="stylesheet" href="/assets/material/plugins/iCheck/all.css">
   <link rel="stylesheet" href="/assets/material/dist/css/skins/all-md-skins.min.css">
 @endpush
 

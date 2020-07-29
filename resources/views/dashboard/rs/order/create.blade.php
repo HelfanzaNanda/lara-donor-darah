@@ -80,7 +80,7 @@
                     <div class="col-md-6">
                         <div class="form-group" style="margin-top:0px;">
                             <label>Tempat</label>
-                            <input type="text" name="tempat" class="form-control" placeholder="Tempat">
+                            <input type="text" name="tempat" class="form-control" placeholder="Nama Rumah Sakit">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -92,7 +92,7 @@
                 </div>
                 <div class="form-group" style="margin-top:0px;">
                     <label>Nama Dokter</label>
-                    <input type="text" name="nama_dokter" class="form-control" placeholder="Dokter Kariadi">
+                    <input type="text" name="nama_dokter" class="form-control" placeholder="Nama Dokter">
                 </div>
                 <div class="box-footer">
                 <button type="submit" class="btn btn-success bg-green btn-sm">Pesan</button>
