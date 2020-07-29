@@ -9,7 +9,7 @@
     <div class="box box-primary">
       <div class="box-header with-border">
         <div class="box-title">
-          <h4 style="margin-top: 0px; margin-bottom: 0px;">Invite New Users</h4>
+          <h4 style="margin-top: 0px; margin-bottom: 0px;">Tambah Users</h4>
         </div>
       </div>
       <!-- /.box-header -->
@@ -23,15 +23,15 @@
           </div>
           <div class="form-group">
             <label>Nama Rumah Sakit</label>
-            <input type="text" class="form-control" name="nama_rs" placeholder="Rs. dr soeselo">
+            <input type="text" class="form-control" name="nama_rs" placeholder="">
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="text" class="form-control" name="email" placeholder="email@emai.com">
+            <input type="text" class="form-control" name="email" placeholder="email@email.com">
           </div>
           <div class="form-group">
             <label>Telepon</label>
-            <input type="text" class="form-control" placeholder="6283453234555" name="phone">
+            <input type="text" class="form-control" placeholder="Masukan No Telp" name="phone">
           </div>
           <div class="form-group">
             <label >Role</label>
@@ -58,19 +58,19 @@
     <!-- Horizontal Form -->
     @if ($message = Session::get('success'))
     <div class="alert alert-success alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>    
+      <button type="button" class="close" data-dismiss="alert">×</button>
       <strong>{{ $message }}</strong>
     </div>
     @endif
     @if ($message = Session::get('message'))
     <div class="alert alert-warning alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>    
+      <button type="button" class="close" data-dismiss="alert">×</button>
       <strong>{{ $message }}</strong>
     </div>
     @endif
     @if ($message = Session::get('error'))
     <div class="alert alert-danger alert-block">
-      <button type="button" class="close" data-dismiss="alert">×</button>    
+      <button type="button" class="close" data-dismiss="alert">×</button>
       <strong>{{ $message }}</strong>
     </div>
     @endif
@@ -87,7 +87,7 @@
     <div class="box box-info">
       <div class="box-header with-border">
         <div class="box-title">
-          <h4 style="margin-top: 0px; margin-bottom: 0px;">All Users</h4>
+          <h4 style="margin-top: 0px; margin-bottom: 0px;">Semua Users</h4>
         </div>
       </div>
       <!-- /.box-header -->
@@ -128,7 +128,7 @@
 @push('footer')
 <script src="/assets/material/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/assets/material/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript"> 
+<script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
       $('#konfirmasi_hapus').on('show.bs.modal', function(e) {

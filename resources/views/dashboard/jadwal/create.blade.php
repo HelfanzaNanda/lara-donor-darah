@@ -7,19 +7,19 @@
         <!-- Horizontal Form -->
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
         @if ($message = Session::get('message'))
         <div class="alert alert-warning alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
         @if ($message = Session::get('error'))
         <div class="alert alert-danger alert-block">
-        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
         </div>
         @endif
@@ -45,7 +45,7 @@
                             <div class="form-group" style="margin-top:0px;">
                                 <label style="margin-bottom:10px;">Foto Lokasi</label>
                                 <div id="image-preview">
-                                    <label for="image-upload" id="image-label" style="color:#f0f0f0;">Choose File</label>
+                                    <label for="image-upload" id="image-label" style="color:#f0f0f0;">Pilih File</label>
                                     <input type="file" name="foto" id="image-upload" />
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group" style="margin-top:0px;">
                         <label>Nama Lokasi</label>
-                        <input type="text" class="form-control" name="nama_tempat" placeholder="Kantor Kecamatan Tarub">
+                        <input type="text" class="form-control" name="nama_tempat" placeholder="Masukan Tempat">
                     </div>
                     <div class="form-group" style="margin-top:10px;">
                         <label>Hari</label>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="form-group" style="margin-top:0px;">
                         <label>Tanggal</label>
-                        <input type="text" class="form-control datepicker" name="tanggal" placeholder="082328321344">
+                        <input type="text" class="form-control datepicker" name="tanggal" placeholder="">
                     </div>
                     <div class="row">
                         <div class="col-lg-6">

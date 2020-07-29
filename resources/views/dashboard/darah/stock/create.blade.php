@@ -55,11 +55,11 @@
                 </div>
                 <div class="form-group">
                     <label>Jumlah</label>
-                    <input type="text" class="form-control" name="qty" placeholder="50">
+                    <input type="text" class="form-control" name="qty" placeholder="300">
                 </div>
                 <div class="form-group">
                     <label>Harga <small>per kantong</small></label>
-                    <input type="text" class="form-control" name="harga" placeholder="100000 /kantong">
+                    <input type="text" class="form-control" name="harga" placeholder="/kantong">
                 </div>
             </div>
             <div class="box-footer">
