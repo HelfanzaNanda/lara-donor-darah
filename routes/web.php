@@ -56,6 +56,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::get('data-pendonor', 'PendonorController@getdata')->name('pendonor.getdata');
 
         Route::post('notif-pendonor', 'PendonorController@sendNotif')->name('pendonor.butuhdarah');
+        Route::post('notif-status', 'PendonorController@sendStatus')->name('pendonor.selesaidarah');
     });
     
     Route::group(['prefix' => 'darah', 'middleware' => 'auth.isPmi'], function(){

@@ -181,7 +181,8 @@
                 </div>
                 <div class="box-footer">
                     @if($pendonor->user_id != null)
-                    <button type="submit" class="btn btn-success btn-sm bg-green">Kirim Notifikasi</button>
+                    <button type="submit" class="btn btn-success btn-sm bg-green">Kirim Notifikasi Butuh Darah</button>
+                    <!-- <button type="submit" class="btn btn-primary btn-sm bg-blue">Kirim Notifikasi Selesai Donor</button> -->
                     @endif
                     <a href="{{url()->previous()}}" class="btn btn-success btn-sm bg-danger">Kembali</a>
                 </div>

@@ -12,6 +12,7 @@ use DataTables;
 use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifButuhDarah;
+use App\Mail\NotifLayakDarah;
 
 class PendonorController extends Controller
 {
@@ -258,6 +259,17 @@ class PendonorController extends Controller
         
         $user = User::find($pendonor->user_id);
         Mail::to($user->email)->send(new NotifButuhDarah($user, $pendonor));
+
+        return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
+    }
+    
+    public function sendStatus(Request $request)
+    {
+        // $status = $request->status;
+        $pendonor = Pendonor::find($request->id_pendonor);
+        
+        $user = User::find($pendonor->user_id);
+        Mail::to($user->email)->send(new NotifLayakDarah($user, $pendonor));
 
         return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
     }

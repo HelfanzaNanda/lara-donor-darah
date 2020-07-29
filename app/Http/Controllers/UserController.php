@@ -27,19 +27,6 @@ class UserController extends Controller
 
     public function store(UsersStoreRequest $request)
     {
-        $messages = [
-            'required' => ':attribute tidak boleh kosong.',
-            'regex'    => ':attribute harus berupa karakter alphabet.',
-            'unique'   => ':attribute sudah digunakan',
-        ];
-
-        $customAttributes = [
-            'nama' => 'Nama',
-            'email' => 'Email',
-            'phone' => 'Telepon',
-            'nama_rs' => 'Nama Rumah Sakit',
-            'role' => 'Role'
-        ];
 
         $posted = $request->validated($messages,$customAttributes);
 
