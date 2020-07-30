@@ -12,7 +12,9 @@ use DataTables;
 use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifButuhDarah;
-use App\Mail\NotifLayakDarah;
+use App\Mail\NotifLayakDonor;
+use Form;
+use Collective\Html\FormFacade;
 
 class PendonorController extends Controller
 {
@@ -32,7 +34,10 @@ class PendonorController extends Controller
     {
         $messages = [
             'required' => ':attribute tidak boleh kosong.',
-            'regex'    => ':attribute harus berupa karakter alphabet.'
+            'regex'    => ':attribute harus berupa karakter alphabet.',
+            'numeric'  => ':attribute harus berupa karakter numerik',
+            'ktp.digits_between' => ':attribute harus 16 karakter',
+            'phone.digits_between' => ':attribute harus diantara 11 - 12'
         ];
 
         $customAttributes = [
@@ -54,7 +59,7 @@ class PendonorController extends Controller
         ];
 
         $valid = $request->validate([
-            'ktp' => 'required|numeric',
+            'ktp' => 'required|numeric|digits_between:16,17',
             'nama' => 'required|regex:/^[\pL\s\-]+$/u',
             'kabupaten' => 'required',
             'kecamatan' => 'required',
@@ -66,7 +71,7 @@ class PendonorController extends Controller
             'pekerjaan' => 'required|regex:/^[\pL\s\-]+$/u',
             'nama_ibu' => 'required|regex:/^[\pL\s\-]+$/u',
             'status_nikah' => 'required|regex:/^[\pL\s\-]+$/u',
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|digits_between:11,13',
             'gol_dar' => 'required',
             'rhesus' => 'required'
         ],$messages,$customAttributes);
@@ -228,10 +233,14 @@ class PendonorController extends Controller
                     return ucwords($pendonor->gol_dar) . ' (' . $pendonor->rhesus . ')';
                 })
                 ->editColumn('action', function ($pendonor) {
-                    return '<a href="' . route('pendonor.edit',$pendonor->id) . '">
-                    <span class="fa fa-pencil" style="margin-right:5px;"> </span> </a> | 
-                    <a type="javascript:;" data-toggle="modal" data-target="#konfirmasi_hapus" data-href="' . route('pendonor.delete',['id'=>$pendonor->id]) . '" title="Delete"> 
-                    <span class="fa fa-trash" style="margin-left:5px;"> </span></a>';
+                    $output = '';
+                    $output .= '<a href="' . route('pendonor.edit',$pendonor->id) . '" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                <a type="javascript:;" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#konfirmasi_hapus" data-href="' . route('pendonor.delete',['id'=>$pendonor->id]) . '" title="Delete"><i class="fa fa-trash"></i></a>';
+                    if($pendonor->user_id != null){
+                        $output .= '<form action="'.route('pendonor.butuhdarah').'" method="post">'.csrf_field().Form::hidden('id_pendonor', $pendonor->id).'<button type="submit" class="btn btn-success btn-xs bg-transparent" title="Kirim Notifikasi Butuh Darah"><i class="fa fa-mail-forward"></i> Send Notif</button></form>';
+                    }
+
+                    return $output;
                 })
                 ->rawColumns(['nama','alamat','ttl','goldar','action'])
                 ->addIndexColumn()
@@ -269,7 +278,7 @@ class PendonorController extends Controller
         $pendonor = Pendonor::find($request->id_pendonor);
         
         $user = User::find($pendonor->user_id);
-        Mail::to($user->email)->send(new NotifLayakDarah($user, $pendonor));
+        Mail::to($user->email)->send(new NotifLayakDonor($user, $pendonor));
 
         return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
     }

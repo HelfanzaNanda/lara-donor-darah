@@ -30,7 +30,7 @@ class NotifLayakDonor extends Mailable
      */
     public function build()
     {
-        return $this->markdown( 'emails.sendNotifLayakDarah' )
+        return $this->markdown( 'emails.sendNotifLayakDonor' )
         ->subject( '[' . config('app.name') . '] Notifikasi Donor Darah' )
         ->with( $this->data );
     }
