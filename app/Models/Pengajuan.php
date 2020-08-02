@@ -10,6 +10,8 @@ class Pengajuan extends Model
     protected $fillable = [
         'user_id',
         'nama_tempat',
+        'nama_acara',
+        'jumlah_peserta',
         'hari',
         'tanggal',
         'jam_mulai',

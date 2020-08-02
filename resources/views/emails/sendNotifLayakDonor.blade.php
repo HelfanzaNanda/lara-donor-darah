@@ -1,9 +1,7 @@
 @component('mail::message')
 # Halo {{ $user->nama }}
 
-Selamat Siang.
-
-Terimakasih atas partisipasi {{$user->nama}}, untuk ikut melakukan donor darah ini.
+Terimakasih atas partisipasi {{$user->nama}}, untuk ikut melakukan donor darah ini. Anda layak untuk melakukan donor darah.
 
 Terima kasih,<br>
 {{ config('app.name') }}

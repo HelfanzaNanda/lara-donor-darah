@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifLayakDonor extends Mailable
+class NotifTidakLayakDonor extends Mailable
 {
     use Queueable, SerializesModels;
     protected $data;
@@ -30,7 +30,7 @@ class NotifLayakDonor extends Mailable
      */
     public function build()
     {
-        return $this->markdown( 'emails.sendNotifLayakDonor' )
+        return $this->markdown( 'emails.sendNotifTidakLayakDonor' )
         ->subject( '[' . config('app.name') . '] Notifikasi Donor Darah' )
         ->with( $this->data );
     }

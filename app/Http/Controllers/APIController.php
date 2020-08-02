@@ -375,6 +375,8 @@ class APIController extends Controller
         $data_jadwal = Pengajuan::create([
             'user_id' => $request->user_id,
             'nama_tempat' => $request->nama_tempat,
+            'nama_acara' => $request->nama_acara,
+            'jumlah_peserta' => $request->jumlah_peserta,
             'hari' => $request->hari,
             'tanggal' => $request->tanggal,
             'jam_mulai' => $request->jam_mulai,
@@ -406,6 +408,8 @@ class APIController extends Controller
                     'id' => $u->id,
                     'user_id' => $u->user_id,
                     'nama_tempat' => $u->nama_tempat,
+                    'nama_acara' => $u->nama_acara,
+                    'jumlah_peserta' => $u->jumlah_peserta,
                     'hari' => $u->hari,
                     'tanggal' => $u->tanggal,
                     'jam_mulai' => $u->jam_mulai,
@@ -432,6 +436,8 @@ class APIController extends Controller
         $pengajuan = Pengajuan::find($request->id);
         $pengajuan->user_id = $request->user_id;
         $pengajuan->nama_tempat = $request->nama_tempat;
+        $pengajuan->nama_acara = $request->nama_acara;
+        $pengajuan->jumlah_peserta = $request->jumlah_peserta;
         $pengajuan->hari = $request->hari;
         $pengajuan->tanggal = $request->tanggal;
         $pengajuan->jam_mulai = $request->jam_mulai;

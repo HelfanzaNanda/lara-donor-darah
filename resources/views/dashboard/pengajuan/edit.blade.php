@@ -56,6 +56,14 @@
                         <label>Nama Tempat</label>
                         <input type="text" class="form-control" name="nama_tempat" placeholder="Kantor Kecamatan Tarub" value="{{$pengajuan->nama_tempat}}" readonly="true">
                     </div>
+                    <div class="form-group" style="margin-top:0px;">
+                        <label>Nama Acara</label>
+                        <input type="text" class="form-control" name="nama_acara" placeholder="Kantor Kecamatan Tarub" value="{{$pengajuan->nama_acara}}" readonly="true">
+                    </div>
+                    <div class="form-group" style="margin-top:0px;">
+                        <label>Jumlah Peserta</label>
+                        <input type="text" class="form-control" name="jumlah_peserta" placeholder="Kantor Kecamatan Tarub" value="{{$pengajuan->jumlah_peserta}}" readonly="true">
+                    </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group" style="margin-top:0px;">

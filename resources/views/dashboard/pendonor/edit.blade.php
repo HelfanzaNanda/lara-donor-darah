@@ -172,6 +172,14 @@
                             <option value="-" {{$pendonor->rhesus == "-" ? 'selected' : ''}}>Negatif (-)</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label>Status Donor</label>
+                        <select name="status_donor" class="form-control">
+                            <option value="">Pilih Status Donor</option>
+                            <option value="layak" {{$pendonor->status_donor == "layak" ? 'selected' : ''}}>Layak</option>
+                            <option value="belum layak" {{$pendonor->status_donor == "belum layak" ? 'selected' : ''}}>Belum Layak</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="box-footer">
                     <button type="reset" class="btn btn-primary btn-sm bg-purple">Reset</button>

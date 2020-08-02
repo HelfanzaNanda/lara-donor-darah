@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotifLayakDonor extends Mailable
+class NotifSelesaiDonor extends Mailable
 {
     use Queueable, SerializesModels;
     protected $data;
@@ -17,10 +17,10 @@ class NotifLayakDonor extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $cek)
+    public function __construct($user, $pendonor)
     {
         $this->data['user'] = $user;
-        $this->data['cek'] = $cek;
+        $this->data['pendonor'] = $pendonor;
     }
 
     /**
@@ -30,7 +30,7 @@ class NotifLayakDonor extends Mailable
      */
     public function build()
     {
-        return $this->markdown( 'emails.sendNotifLayakDonor' )
+        return $this->markdown( 'emails.sendNotifSelesaiDonor' )
         ->subject( '[' . config('app.name') . '] Notifikasi Donor Darah' )
         ->with( $this->data );
     }

@@ -13,6 +13,8 @@ use DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotifButuhDarah;
 use App\Mail\NotifLayakDonor;
+use App\Mail\NotifTidakLayakDonor;
+use App\Mail\NotifSelesaiDonor;
 use Form;
 use Collective\Html\FormFacade;
 
@@ -182,8 +184,24 @@ class PendonorController extends Controller
             $pendonor->phone = $request->phone;
             $pendonor->gol_dar = $request->gol_dar;
             $pendonor->rhesus = $request->rhesus;
+            if($request->status_donor != null){
+                $pendonor->status_donor = $request->status_donor;
+            }
             $pendonor->save();
-            
+
+            if($pendonor->user_id != null){
+                if($pendonor->status_donor == 'layak'){
+                    $cek = Pendonor::find($pendonor->id);        
+                    $user = User::find($cek->user_id);
+                    Mail::to($user->email)->send(new NotifLayakDonor($user, $cek));
+                }
+                
+                if($pendonor->status_donor == 'belum layak'){
+                    $cek = Pendonor::find($pendonor->id);
+                    $user = User::find($cek->user_id);
+                    Mail::to($user->email)->send(new NotifTidakLayakDonor($user, $cek));
+                }   
+            }
             return redirect()->route('pendonor.index')->with('success','Pendonor berhasil diubah.');
         }
         else {
@@ -278,7 +296,7 @@ class PendonorController extends Controller
         $pendonor = Pendonor::find($request->id_pendonor);
         
         $user = User::find($pendonor->user_id);
-        Mail::to($user->email)->send(new NotifLayakDonor($user, $pendonor));
+        Mail::to($user->email)->send(new NotifSelesaiDonor($user, $pendonor));
 
         return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
     }
