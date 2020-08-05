@@ -45,7 +45,7 @@
                         <div class="form-group" style="margin-top:0px;">
                             <label>Golongan Darah</label>
                             <input type="text" class="form-control" name="gol_dar" placeholder="Golongan Darah" value="{{$stock->gol_dar}}" readonly>
-                            <input type="text" class="form-control" name="goldar_id" placeholder="Golongan Darah" value="{{$stock->id}}" readonly>
+                            <input type="hidden" name="goldar_id" value="{{$stock->id}}" readonly>
                         </div>
                     </div>
                     <div class="col-md-1">

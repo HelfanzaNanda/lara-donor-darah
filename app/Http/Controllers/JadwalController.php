@@ -107,7 +107,7 @@ class JadwalController extends Controller
         ];
 
         $valid = $request->validate([
-            'nama_tempat' => 'required|regex:/^[\pL\s\-]+$/u',
+            'nama_tempat' => 'required|regex:/(^[A-Za-z0-9 ]+$)+/',
             'hari' => 'required',
             'tanggal' => 'required',
             'jam_mulai' => 'required',

@@ -45,7 +45,7 @@
                         <div class="col-sm-3" style="margin-top: 0px;">
                             <div class="form-group" style="margin-top:0px;">
                                 <label style="margin-bottom:10px;">Foto Lokasi</label>
-                                <div id="image-preview">
+                                <div id="image-preview" style="width:200px;background-image:url(/uploads/{{$jadwal->foto}});">
                                     <label for="image-upload" id="image-label" style="color:#f0f0f0;">Choose File</label>
                                     <input type="file" name="image" id="image-upload" />
                                 </div>
@@ -99,8 +99,8 @@
                         <label>Status</label>
                         <select name="status" class="form-control">
                             <option value="">Pilih Status</option>
-                            <option value="selesai" {{ $jadwal->status == 'selesai' ? 'selected' : '' }}>Senin</option>
-                            <option value="batal" {{ $jadwal->status == 'batal' ? 'selected' : '' }}>Selasa</option>
+                            <option value="selesai" {{ $jadwal->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="batal" {{ $jadwal->status == 'batal' ? 'selected' : '' }}>Batal</option>
                         </select>
                     </div>
                 </div>
