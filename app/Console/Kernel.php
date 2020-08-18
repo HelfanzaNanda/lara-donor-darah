@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Carbon\Carbon;
+use DB;
+use App\Models\Jadwal;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +27,19 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // $dateNow = Carbon::now()->format('y/m/d');
+        // $jadwal = Jadwal::all();
+        // foreach($jadwal as $j){
+        //     $dateDone = 
+        // }
+        // $schedule->call(function () {
+        //     DB::table('jadwal')->where('jadwal',)->update(['status' => 'selesai']);
+        // })->daily();
+        // $startDate = Carbon::createFromFormat('y/m/d');
+        // $endDate = Carbon::createFromFormat('y/m/d');
+
+        // $check = Carbon::now()->format('y/m/d')->between($startDate,$endDate);
+        
     }
 
     /**

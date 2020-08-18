@@ -8,9 +8,16 @@ use DataTables;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use PDF;
+use Carbon\Carbon;
 
 class JadwalController extends Controller
 {
+
+    public function __construct()
+    {
+        $dateNow = Carbon::now()->format('y/m/d');
+        $check = Jadwal::where('tanggal','<=',$dateNow)->update(['status'=>'selesai']);
+    }
     
     public function index()
     {
@@ -60,7 +67,7 @@ class JadwalController extends Controller
             $data_jadwal = new Jadwal([
                 'nama_tempat' => $request->get('nama_tempat'),
                 'hari' => $request->get('hari'),
-                'tanggal' => $request->get('tanggal'),
+                'tanggal' => Carbon::parse($request->get('tanggal'))->format('y/m/d'),
                 'jam_mulai' => $request->get('jam_mulai'),
                 'jam_selesai' => $request->get('jam_selesai'),
                 'alamat' => $request->get('alamat'),

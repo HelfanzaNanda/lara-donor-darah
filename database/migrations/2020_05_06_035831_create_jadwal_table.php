@@ -18,7 +18,7 @@ class CreateJadwalTable extends Migration
             $table->string('nama_tempat', 30);
             $table->string('foto', 100)->nullable();
             $table->string('hari', 10);
-            $table->string('tanggal');
+            $table->date('tanggal');
             $table->text('alamat');
             $table->string('jam_mulai');
             $table->string('jam_selesai');

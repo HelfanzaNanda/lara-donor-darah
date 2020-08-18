@@ -18,29 +18,33 @@
         <div class="box-body">
           @csrf
           <div class="form-group">
-            <label>Nama Pengurus</label>
-            <input type="text" class="form-control" name="nama" placeholder="Nama akun">
-          </div>
-          <div class="form-group">
-            <label>Nama Rumah Sakit</label>
-            <input type="text" class="form-control" name="nama_rs" placeholder="">
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="text" class="form-control" name="email" placeholder="email@email.com">
-          </div>
-          <div class="form-group">
-            <label>Telepon</label>
-            <input type="text" class="form-control" placeholder="Masukan No Telp" name="phone">
-          </div>
-          <div class="form-group">
             <label >Role</label>
-              <select name="role" class="form-control">
+              <select name="role" id="seeAnotherField" class="form-control">
                 <option value="">Pilih role</option>
                 <option value="pmi">PMI</option>
                 <option value="rs">Rumah Sakit</option>
                 <option value="pendonor">Pendonor</option>
               </select>
+          </div>
+          <div class="form-group" id="namaFieldDiv">
+            <label for="namaField">Nama</label>
+            <input type="text" class="form-control" id="tglField" name="nama" placeholder="Nama akun">
+          </div>
+          <div class="form-group" id="namapengurusFieldDiv">
+            <label for="namapengurusField">Nama Pengurus</label>
+            <input type="text" class="form-control" id="namapengurusField" name="nama" placeholder="Nama akun">
+          </div>
+          <div class="form-group" id="namarsFieldDiv">
+            <label for="namarsField">Nama Rumah Sakit</label>
+            <input type="text" class="form-control" id="namarsField" name="nama_rs" placeholder="">
+          </div>
+          <div class="form-group" id="emailFieldDiv">
+            <label for="emailField">Email</label>
+            <input type="text" class="form-control" id="emailField" name="email" placeholder="email@email.com">
+          </div>
+          <div class="form-group" id="teleponFieldDiv">
+            <label for="teleponField">Telepon</label>
+            <input type="text" class="form-control" id="teleponField" placeholder="Masukan No Telp" name="phone">
           </div>
         </div>
         <!-- /.box-body -->
@@ -153,4 +157,68 @@
       });
     });
   </script>
-  @endpush
+<script>
+$("#seeAnotherField").change(function() {
+  if ($(this).val() == "pmi") {
+    $('#namapengurusFieldDiv').show();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#emailFieldDiv').show();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').show();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }else if($(this).val() == 'rs') {
+    $('#namaFieldDiv').hide();
+    $('#namaField').removeAttr('required');
+    $('#namaField').removeAttr('data-error');
+    $('#namapengurusFieldDiv').show();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#namarsFieldDiv').show();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#emailFieldDiv').show();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').show();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }else if($(this).val() == 'pendonor') {
+    $('#namaFieldDiv').show();
+    $('#namaField').removeAttr('required');
+    $('#namaField').removeAttr('data-error');
+    $('#namapengurusFieldDiv').hide();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#namarsFieldDiv').hide();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#emailFieldDiv').show();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').show();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }else{
+    $('#namaFieldDiv').hide();
+    $('#namaField').removeAttr('required');
+    $('#namaField').removeAttr('data-error');
+    $('#namapengurusFieldDiv').hide();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#namarsFieldDiv').hide();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#emailFieldDiv').hide();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').hide();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }
+});
+$("#seeAnotherField").trigger("change");
+</script>
+@endpush
