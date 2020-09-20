@@ -23,6 +23,8 @@
                 <option value="">Pilih role</option>
                 <option value="pmi">PMI</option>
                 <option value="rs">Rumah Sakit</option>
+                <option value="puskesmas">Puskesmas</option>
+                <option value="klinik">Klinik</option>
                 <option value="pendonor">Pendonor</option>
               </select>
           </div>
@@ -30,14 +32,56 @@
             <label for="namaField">Nama</label>
             <input type="text" class="form-control" id="tglField" name="nama" placeholder="Nama akun">
           </div>
+          <div class="form-group" id="namarsFieldDiv">
+            <label for="namaField">Nama Rumah Sakit</label>
+            <select name="nama_rs" class="form-control">
+              <option value="" selected disabled>Pilih Rumah Sakit</option>
+              <option value="RS Mitra Keluarga Tegal">RS Mitra Keluarga Tegal</option>
+              <option value="RSU Kardinah Tegal</">RSU Kardinah Tegal</option>
+              <option value="RSI Harapan Anda Tegal">RSI Harapan Anda Tegal</option>
+            </select>
+          </div>
+          <div class="form-group" id="namapuskesmasFieldDiv">
+            <label for="namaField">Nama Puskesmas</label>
+            <select name="nama_rs" class="form-control">
+              <option value="" selected disabled>Pilih Puskesmas</option>
+              <option value="Puskesmas Tegal Barat">Puskesmas Tegal Barat</option>
+              <option value="Puskesmas Debong Lor">Puskesmas Debong Lor</option>
+              <option value="Puskesmas Tegal Timur">Puskesmas Tegal Timur</option>
+              <option value="Puskesmas Slerok">Puskesmas Slerok</option>
+              <option value="Puskesmas Tegal Selatan">Puskesmas Tegal Selatan</option>
+              <option value="Puskesmas Bandung">Puskesmas Bandung</option>
+              <option value="Puskesmas Margadana">Puskesmas Margadana</option>
+              <option value="Puskesmas Kaligangsa">Puskesmas Kaligangsa</option>
+            </select>
+          </div>
+          <div class="form-group" id="namaklinikFieldDiv">
+            <label for="namaklinikField">Nama Klinik</label>
+            <select name="nama_rs" class="form-control">
+              <option value="" selected disabled>Pilih Klinik</option>
+              <option value="BP Polres Tegal Kota">BP Polres Tegal Kota</option>
+              <option value="Klinik Jala Medika Lanal Tegal">Klinik Jala Medika Lanal Tegal</option>
+              <option value="Klinik Permata As-syifa (plus) ">Klinik Permata As-syifa (plus) </option>
+              <option value="Klinik Perintis">Klinik Perintis</option>
+              <option value="Klinik Ananda (jst) ">Klinik Ananda (jst) </option>
+              <option value="Klinik Mediska PT. KAI Tegal">Klinik Mediska PT. KAI Tegal</option>
+              <option value="Klinik Pratama Werkudoro">Klinik Pratama Werkudoro</option>
+              <option value="Klinik Imam Syafii">Klinik Imam Syafii</option>
+              <option value="Klinik KS Tubun 81">Klinik KS Tubun 81</option>
+              <option value="Klinik Pratama NU Margadana">Klinik Pratama NU Margadana</option>
+              <option value="BP Aisyiyah Siti Hajar">BP Aisyiyah Siti Hajar</option>
+              <option value="Klinik Medicall">Klinik Medicall</option>
+              <option value="Klinik As-syifa">Klinik As-syifa</option>
+            </select>
+          </div>
           <div class="form-group" id="namapengurusFieldDiv">
             <label for="namapengurusField">Nama Pengurus</label>
             <input type="text" class="form-control" id="namapengurusField" name="nama" placeholder="Nama akun">
           </div>
-          <div class="form-group" id="namarsFieldDiv">
+          <!-- <div class="form-group" id="namarsFieldDiv">
             <label for="namarsField">Nama Rumah Sakit</label>
             <input type="text" class="form-control" id="namarsField" name="nama_rs" placeholder="">
-          </div>
+          </div> -->
           <div class="form-group" id="emailFieldDiv">
             <label for="emailField">Email</label>
             <input type="text" class="form-control" id="emailField" name="email" placeholder="email@email.com">
@@ -163,6 +207,15 @@ $("#seeAnotherField").change(function() {
     $('#namapengurusFieldDiv').show();
     $('#namapengurusField').removeAttr('required');
     $('#namapengurusField').removeAttr('data-error');
+    $('#namarsFieldDiv').hide();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').hide();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').hide();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
     $('#emailFieldDiv').show();
     $('#emailField').removeAttr('required');
     $('#emailField').removeAttr('data-error');
@@ -179,6 +232,56 @@ $("#seeAnotherField").change(function() {
     $('#namarsFieldDiv').show();
     $('#namarsField').removeAttr('required');
     $('#namarsField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').hide();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').hide();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
+    $('#emailFieldDiv').show();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').show();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }else if($(this).val() == 'puskesmas') {
+    $('#namaFieldDiv').hide();
+    $('#namaField').removeAttr('required');
+    $('#namaField').removeAttr('data-error');
+    $('#namapengurusFieldDiv').show();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').show();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').hide();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namarsFieldDiv').hide();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#emailFieldDiv').show();
+    $('#emailField').removeAttr('required');
+    $('#emailField').removeAttr('data-error');
+    $('#teleponFieldDiv').show();
+    $('#teleponField').removeAttr('required');
+    $('#teleponField').removeAttr('data-error');
+  }else if($(this).val() == 'klinik') {
+    $('#namaFieldDiv').hide();
+    $('#namaField').removeAttr('required');
+    $('#namaField').removeAttr('data-error');
+    $('#namapengurusFieldDiv').show();
+    $('#namapengurusField').removeAttr('required');
+    $('#namapengurusField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').show();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namarsFieldDiv').hide();
+    $('#namarsField').removeAttr('required');
+    $('#namarsField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').hide();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
     $('#emailFieldDiv').show();
     $('#emailField').removeAttr('required');
     $('#emailField').removeAttr('data-error');
@@ -195,6 +298,12 @@ $("#seeAnotherField").change(function() {
     $('#namarsFieldDiv').hide();
     $('#namarsField').removeAttr('required');
     $('#namarsField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').hide();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').hide();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
     $('#emailFieldDiv').show();
     $('#emailField').removeAttr('required');
     $('#emailField').removeAttr('data-error');
@@ -211,6 +320,12 @@ $("#seeAnotherField").change(function() {
     $('#namarsFieldDiv').hide();
     $('#namarsField').removeAttr('required');
     $('#namarsField').removeAttr('data-error');
+    $('#namaklinikFieldDiv').hide();
+    $('#namaklinikField').removeAttr('required');
+    $('#namaklinikField').removeAttr('data-error');
+    $('#namapuskesmasFieldDiv').hide();
+    $('#namapuskesmasField').removeAttr('required');
+    $('#namapuskesmasField').removeAttr('data-error');
     $('#emailFieldDiv').hide();
     $('#emailField').removeAttr('required');
     $('#emailField').removeAttr('data-error');

@@ -27,7 +27,30 @@ class UserController extends Controller
 
     public function store(UsersStoreRequest $request)
     {
+        $messages = [
+            'required' => ':attribute tidak boleh kosong.',
+            'regex'    => ':attribute harus berupa karakter alphabet.'
+        ];
 
+        $customAttributes =  [
+                'nama'      => 'Nama',
+                'email'     => 'Email',
+                'phone'     => 'No Telepon',
+                'nama_rs'   => 'Nama Rumah Sakit',
+                'role'      => 'Role',
+        ];
+    
+        $messages = [
+                'nama.required' => ':attribute harus diisi',
+                'nama.regex' => ':attribute harus berupa karakter alphabet',
+                'email.required' => ':attribute harus diisi',
+                'email.unique' => ':attribute telah digunakan',
+                'phone.required' => ':attribute harus diisi',
+                'phone.numeric' => ':attribute harus berupa angka',
+                'nama_rs.required' => ':attribute harus diisi',
+                'nama_rs.regex' => ':attribute harus berupa karakter alphabet',
+                'role.required' => ':attribute harus diisi',
+        ];
         $posted = $request->validated($messages,$customAttributes);
 
         $pwd = Str::random(10);
