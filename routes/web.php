@@ -30,6 +30,10 @@ Route::get('/', 'DashboardController@index')->name('dashboard.index');
 Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
     Route::get('/', 'DashboardController@index')->name('dashboard.index');
     Route::get('home', 'DashboardController@dashboard')->name('dashboard');
+    Route::get('home/chart/rs', 'DashboardController@chartRs');
+    Route::get('home/chart/pendonor', 'DashboardController@chartPendonor');
+    Route::get('home/chart/tempat', 'DashboardController@chartTempat');
+    Route::get('home/chart/darah', 'DashboardController@chartDarah');
 
     Route::get('profile', 'UserController@profile')->name('profile');
     Route::put('profile', 'UserController@profileUpdate')->name('profile.update');

@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\Pendonor;
+use App\Models\Permintaan;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nama', 'email', 'password', 'role', 'nama_rs', 'phone',
+        'nama', 'email', 'password', 'role', 'nama_rs', 'phone', 'api_token',
     ];
 
     /**
@@ -52,6 +54,16 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function permintaans()
+    {
+        return $this->hasMany(Permintaan::class, 'user_id', 'id');
+    }
+
+    public function pendonors()
+    {
+        return $this->hasMany(Pendonor::class, 'user_id', 'id');
     }
 
 }

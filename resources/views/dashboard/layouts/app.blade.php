@@ -173,6 +173,9 @@
 <script src="/assets/material/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/assets/material/dist/js/demo.js"></script>
+
+@yield('script')
+
 @stack('footer')
 </body>
 </html>

@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Permintaan extends Model
 {
@@ -32,5 +34,10 @@ class Permintaan extends Model
     public function pembayaran()
     {
         return $this->belongsTo('App\Models\Pembayaran','permintaan_id','id');
+    }
+
+    public function user()
+    {
+        return $this->BelongsTo(User::class, 'user_id', 'id');
     }
 }

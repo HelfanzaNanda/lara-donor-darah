@@ -13,29 +13,32 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user/profile', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::post('/user-register', 'APIController@userRegister');
-Route::post('/user-login', 'APIController@userLogin');
-Route::post('/user-detail', 'APIController@detailUser');
-Route::post('/user-update', 'APIController@updateUser');
-Route::post('/user-upload', 'APIController@upload');
-Route::post('/forgot-password', 'APIController@forgotPassword');
+Route::post('/user/register', 'APIController@userRegister');//url api register
+Route::post('/user/login', 'APIController@userLogin');//url api login
+Route::get('/user/profile', 'APIController@profile');// url api untuk detail profile
+Route::post('/user/update', 'APIController@updateUser');//url api unntuk update profile
+Route::post('/user/upload', 'APIController@upload');//url api upload foto profile
+Route::post('/forgotpassword', 'APIController@forgotPassword');//forgot password
 
+//ini url untuk nampilin informasi, secara default ketika akses akan diarahkan ke
+//http://domain/donor-darah/public/api/
+//lalu tinggal tambahin aja setelah api/
+//contoh : http://192.168.42.251/donor-darah/public/api/information-show
+Route::get('/information', 'APIController@getInformation');
+Route::get('/news', 'APIController@getBerita');
 
-Route::get('/information-show', 'APIController@getInformation');
-Route::get('/berita-show', 'APIController@getBerita');
+Route::get('/schedulle', 'APIController@getJadwal');
+Route::post('/submission/add', 'APIController@createPengajuan');
+Route::post('/submission/show', 'APIController@getPengajuan');
+Route::post('/submission/update', 'APIController@updatePengajuan');
+Route::post('/submission/delete', 'APIController@deletePengajuan');
 
-Route::get('/jadwal-show', 'APIController@getJadwal');
-Route::post('/pengajuan-add', 'APIController@createPengajuan');
-Route::post('/pengajuan-show', 'APIController@getPengajuan');
-Route::post('/pengajuan-update', 'APIController@updatePengajuan');
-Route::post('/pengajuan-delete', 'APIController@deletePengajuan');
+Route::get('/stock', 'APIController@getStockDarah');
 
-Route::get('/stock-show', 'APIController@getStockDarah');
-
-Route::post('/pendonor-add', 'APIController@addPendonor');
-Route::post('/pendonor-get', 'APIController@getPendonor');
-Route::post('/pendonor-update', 'APIController@updatePendonor');
+Route::post('/pendonor/add', 'APIController@addPendonor');
+Route::post('/pendonor/get', 'APIController@getPendonor');
+Route::post('/pendonor/update', 'APIController@updatePendonor');

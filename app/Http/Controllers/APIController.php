@@ -11,18 +11,24 @@ use App\Models\StockDarah;
 use App\Models\Pendonor;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendForgotPassword;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class APIController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only(['profile', 'updateUser', 'upload']);
+    }
+
     public function userRegister(Request $request)
     {
         $this->validate($request, [
             'nama' => 'required',
             'email' => 'required',
-            // 'phone' => 'required',
             'password' => 'required'
         ]);
 
@@ -30,18 +36,25 @@ class APIController extends Controller
             'nama'       => $request->nama,
             'email'      => $request->email,
             'phone'      => "08923423455",
-            'role'       => 'pendonor',
-            'password'   => bcrypt($request->password)
+            //'role'       => 'pendonor',
+            'role'       => $request->role,
+            'password'   => Hash::make($request->password),
+            'api_token'  => Str::random(80)
         ]);
 
         if($user){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
+            
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -49,81 +62,68 @@ class APIController extends Controller
     {
         $input = $request->all();
 
-        $role = "pendonor";
-        // $email = $input['email'];
+        //$role = "pendonor";
+        $role = $request->role;
+        
+        $credential = [
+            'email' => $request->email,
+            'password' => $request->password,
 
-        $cek = auth()->attempt(array('email' => $input['email'], 'password' => $input['password'], 'role' => $role));
+        ];
 
-        if($cek){
-            // $result = [];
-            $login = User::where('email',$input['email'])->get();
-            foreach ($login as $logg) {
-                $result["login"] = [[
-                    "id" => $logg->id,
-                    "nama" => $logg->nama,
-                    "email" => $logg->email,
-                    "phone" => $logg->phone,
-                    "role" => $logg->role,
-                    "foto" => $logg->foto,
-                ]];
-                $result["success"] = "1";
-                $result["message"] = "success";
-                //untuk memanggil data sesi Login
-                echo json_encode($result);
+        if (Auth::guard('web')->attempt($credential)){
+            $user = Auth::guard('web')->user();
+            if ($user->email_verified_at !== null){
+                return response()->json([
+                    'message' => 'Login Successfully',
+                    'status' => true,
+                    'data' => $user,
+                ], 200);
+            }else{
+                return response()->json([
+                    'message' => 'Silahkan Aktifasi Email Dahulu',
+                    'status' => false,
+                    'data' => []
+                ], 401);
             }
-        }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
         }
+        return response()->json([
+            'message' => 'Masukan Email dan Password yang benar',
+            'status' => false,
+            'data' => (object)[]
+        ], 401);
     }
 
-    public function detailUser(Request $request)
+    public function profile()
     {
-        $id = $request->id;
-
-        $cek = User::where('id',$id)->get();
-        if($cek){
-            foreach($cek as $u){
-                $result["read"] = [[
-                    "id" => $u->id,
-                    "nama" => $u->nama,
-                    "email" => $u->email,
-                    "phone" => $u->phone,
-                    "role" => "Pendonor",
-                    "foto" => $u->foto,
-                ]];
-                $result["success"] = "1";
-                $result["message"] = "success";
-                //untuk memanggil data sesi Login
-                echo json_encode($result);
-            }
-        }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
-        }
+        return response()->json([
+            'message' => 'success',
+            'status' => true,
+            'data' => Auth::user(),
+        ], 200);
     }
 
     public function updateUser(Request $request)
     {
-        $getId = $request->id;
-        $user = User::find($getId);
+        $user = Auth::user();
         $user->nama = $request->nama;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->foto = $request->foto;
-        $user->role = "Pendonor";
         $user->save();
 
         if($user){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -135,18 +135,22 @@ class APIController extends Controller
 
         Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
 
-        $user = User::find($getId);
+        $user = Auth::user();
         $user->foto = $cover->getFileName().'.'.$extension;
         $user->save();
 
         if($user){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -157,9 +161,11 @@ class APIController extends Controller
         $user = User::where('email',$email)->first();
 
         $send = Mail::to($user->email)->send(new SendForgotPassword($user));
-        $result["success"] = "1";
-        $result["message"] = "success";
-        echo json_encode($result);
+        return response()->json([
+            'message' => 'success',
+            'status' => true,
+            'data' => (object)[]
+        ]);
     }
 
     //Json data Informasi
@@ -168,24 +174,31 @@ class APIController extends Controller
     {
         $getInformation = Information::where('kategori','informasi')->get();
         if($getInformation){
-            $result["read"] = [];
+            // jika ada data, buat variabel read untuk menampung data array
+            $result = [];
+            // tampilkan data aja yang mau di tampilkan dengan foreach
             foreach($getInformation as $u){
                 $data = [
                     "id" => $u->id,
                     "title" => $u->title,
                     "image" => url('/uploads/'.$u->image),
-                    "kategori" => $u->kategori,
+                    "category" => $u->kategori,
                     "content" => $u->content,
                 ];
-                array_push($result["read"],$data);
+                //tampung data yang diatas ke variabel read
+                array_push($result,$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -193,33 +206,37 @@ class APIController extends Controller
     {
         $getInformation = Information::where('kategori','berita')->get();
         if($getInformation){
-            $result["read"] = [];
+            $result = [];
             foreach($getInformation as $u){
                 $data = [
                     "id" => $u->id,
                     "title" => $u->title,
                     "image" => url('/uploads/'.$u->image),
-                    "kategori" => $u->kategori,
+                    "category" => $u->kategori,
                     "content" => $u->content,
                 ];
-                array_push($result["read"],$data);
+                array_push($result,$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
-
+<x></x>
     public function getJadwal(Request $request)
     {
         $getInformation = Jadwal::orderBy('tanggal', 'ASC')->get();
         if($getInformation){
-            $result["read"] = [];
+            $result = [];
             foreach($getInformation as $u){
                 $data = [
                     "id" => $u->id,
@@ -231,15 +248,19 @@ class APIController extends Controller
                     "jam_mulai" => $u->jam_mulai,
                     "jam_selesai" => $u->jam_selesai,
                 ];
-                array_push($result["read"],$data);
+                array_push($result,$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -248,7 +269,7 @@ class APIController extends Controller
     {
         $getInformation = StockDarah::orderBy('gol_dar','ASC')->get();
         if($getInformation){
-            $result["read"] = [];
+            $result = [];
             foreach($getInformation as $u){
                 $data = [
                     "id" => $u->id,
@@ -257,25 +278,28 @@ class APIController extends Controller
                     "jenis_tranfusi" => $u->jenis_tranfusi,
                     "qty" => $u->qty,
                 ];
-                array_push($result["read"],$data);
+                array_push($result,$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
 
     public function getPendonor(Request $request)
     {
-        $user_id = $request->user_id;
         $getPendonor = Pendonor::where('user_id', $request->user_id)->get();
         if($getPendonor){
-            $result["read"] = [];
+            $result = [];
             foreach($getPendonor as $u){
                 $data = [
                     'id' => $u->id,
@@ -299,18 +323,22 @@ class APIController extends Controller
                 ];
                 array_push($result["read"],$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
-    
+
     public function addPendonor(Request $request)
-    {        
+    {
         $data_pendonor = Pendonor::create([
             'user_id' => $request->user_id,
             'ktp' => $request->ktp,
@@ -326,15 +354,19 @@ class APIController extends Controller
             'gol_dar' => $request->gol_dar,
             'rhesus' => $request->rhesus,
         ]);
-        
+
         if($data_pendonor){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -355,15 +387,19 @@ class APIController extends Controller
         $data_pendonor->gol_dar = $request->gol_dar;
         $data_pendonor->rhesus = $request->rhesus;
         $data_pendonor->save();
-        
+
         if($data_pendonor){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -385,15 +421,19 @@ class APIController extends Controller
             'penanggung_jawab' => $request->penanggung_jawab,
             'status' => 'pending',
         ]);
-        
+
         if($data_jadwal){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -402,7 +442,7 @@ class APIController extends Controller
         $user_id = $request->user_id;
         $query = Pengajuan::where('user_id',$user_id)->where('status', '!=', 'diterima')->get();
         if($query){
-            $result["read"] = [];
+            $result = [];
             foreach($query as $u){
                 $data = [
                     'id' => $u->id,
@@ -419,15 +459,19 @@ class APIController extends Controller
                     'foto' => url('/uploads/'.$u->foto),
                     'status' => ucwords($u->status),
                 ];
-                array_push($result["read"],$data);
+                array_push($result,$data);
             }
-                $result["success"] = "1";
-                $result["message"] = "success";
-                echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => $result
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -445,15 +489,19 @@ class APIController extends Controller
         $pengajuan->alamat = $request->alamat;
         $pengajuan->penanggung_jawab = $request->penanggung_jawab;
         $pengajuan->save();
-        
+
         if($pengajuan){
-            $result["success"] = "1";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "0";
-            $result["message"] = "error";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
     }
 
@@ -462,13 +510,17 @@ class APIController extends Controller
         $id = $request->id;
         $delete = Pengajuan::where('id',$id)->delete();
         if($delete){
-            $result["success"] = "true";
-            $result["message"] = "success";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
-            $result["success"] = "false";
-            $result["message"] = "Failed";
-            echo json_encode($result);
+            return response()->json([
+                'message' => 'error',
+                'status' => false,
+                'data' => (object)[]
+            ]);
         }
-    }    
+    }
 }
