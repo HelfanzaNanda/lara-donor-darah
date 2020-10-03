@@ -21,7 +21,8 @@ class APIController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['profile', 'updateUser', 'upload']);
+        $this->middleware('auth:api')->only(['profile', 'updateUser', 'upload',
+        'getPendonor', 'getPengajuan', 'createPengajuan', 'addPendonor']);
     }
 
     public function userRegister(Request $request)
@@ -321,8 +322,9 @@ class APIController extends Controller
                     'rhesus' => $u->rhesus,
                     'gol_rhesus' => $u->gol_dar.''.$u->rhesus,
                 ];
-                array_push($result["read"],$data);
+                array_push($result,$data);
             }
+
             return response()->json([
                 'message' => 'success',
                 'status' => true,
@@ -340,7 +342,7 @@ class APIController extends Controller
     public function addPendonor(Request $request)
     {
         $data_pendonor = Pendonor::create([
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id,
             'ktp' => $request->ktp,
             'nama' => $request->nama,
             'alamat' => $request->alamat,
@@ -408,7 +410,7 @@ class APIController extends Controller
     public function createPengajuan(Request $request)
     {
         $data_jadwal = Pengajuan::create([
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id,
             'nama_tempat' => $request->nama_tempat,
             'nama_acara' => $request->nama_acara,
             'jumlah_peserta' => $request->jumlah_peserta,
