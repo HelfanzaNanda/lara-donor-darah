@@ -33,12 +33,12 @@ Route::get('/news', 'APIController@getBerita');
 
 Route::get('/schedulle', 'APIController@getJadwal');
 Route::post('/submission/add', 'APIController@createPengajuan');
-Route::post('/submission/show', 'APIController@getPengajuan');
-Route::post('/submission/update', 'APIController@updatePengajuan');
-Route::post('/submission/delete', 'APIController@deletePengajuan');
+Route::get('/submission', 'APIController@getPengajuan');
+Route::post('/submission/{id}/update', 'APIController@updatePengajuan');
+Route::post('/submission/{id}/delete', 'APIController@deletePengajuan');
 
 Route::get('/stock', 'APIController@getStockDarah');
 
 Route::post('/pendonor/add', 'APIController@addPendonor');
-Route::post('/pendonor/get', 'APIController@getPendonor');
-Route::post('/pendonor/update', 'APIController@updatePendonor');
+Route::get('/pendonor', 'APIController@getPendonor');
+Route::post('/pendonor/{id}/update', 'APIController@updatePendonor');

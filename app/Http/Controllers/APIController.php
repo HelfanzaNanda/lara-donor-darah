@@ -170,7 +170,7 @@ class APIController extends Controller
 
     //Json data Informasi
 
-    public function getInformation(Request $request)
+    public function getInformation()
     {
         $getInformation = Information::where('kategori','informasi')->get();
         if($getInformation){
@@ -202,7 +202,7 @@ class APIController extends Controller
         }
     }
 
-    public function getBerita(Request $request)
+    public function getBerita()
     {
         $getInformation = Information::where('kategori','berita')->get();
         if($getInformation){
@@ -231,8 +231,7 @@ class APIController extends Controller
         }
     }
 
-<x></x>
-    public function getJadwal(Request $request)
+    public function getJadwal()
     {
         $getInformation = Jadwal::orderBy('tanggal', 'ASC')->get();
         if($getInformation){
@@ -265,7 +264,7 @@ class APIController extends Controller
     }
 
 
-    public function getStockDarah(Request $request)
+    public function getStockDarah()
     {
         $getInformation = StockDarah::orderBy('gol_dar','ASC')->get();
         if($getInformation){
@@ -295,9 +294,10 @@ class APIController extends Controller
     }
 
 
-    public function getPendonor(Request $request)
+    public function getPendonor()
     {
-        $getPendonor = Pendonor::where('user_id', $request->user_id)->get();
+        $id = Auth::user()->id;
+        $getPendonor = Pendonor::where('user_id', $id)->get();
         if($getPendonor){
             $result = [];
             foreach($getPendonor as $u){
@@ -370,10 +370,9 @@ class APIController extends Controller
         }
     }
 
-    public function updatePendonor(Request $request)
+    public function updatePendonor(Request $request, $id)
     {
-        $data_pendonor = Pendonor::find($request->id);
-        $data_pendonor->user_id = $request->user_id;
+        $data_pendonor = Pendonor::find($id);
         $data_pendonor->ktp = $request->ktp;
         $data_pendonor->nama = $request->nama;
         $data_pendonor->alamat = $request->alamat;
@@ -386,7 +385,7 @@ class APIController extends Controller
         $data_pendonor->phone = $request->phone;
         $data_pendonor->gol_dar = $request->gol_dar;
         $data_pendonor->rhesus = $request->rhesus;
-        $data_pendonor->save();
+        $data_pendonor->update();
 
         if($data_pendonor){
             return response()->json([
@@ -437,10 +436,10 @@ class APIController extends Controller
         }
     }
 
-    public function getPengajuan(Request $request)
+    public function getPengajuan()
     {
-        $user_id = $request->user_id;
-        $query = Pengajuan::where('user_id',$user_id)->where('status', '!=', 'diterima')->get();
+        $id = Auth::user()->id;
+        $query = Pengajuan::where('user_id',$id)->where('status', '!=', 'diterima')->get();
         if($query){
             $result = [];
             foreach($query as $u){
@@ -475,10 +474,9 @@ class APIController extends Controller
         }
     }
 
-    public function updatePengajuan(Request $request)
+    public function updatePengajuan(Request $request, $id)
     {
-        $pengajuan = Pengajuan::find($request->id);
-        $pengajuan->user_id = $request->user_id;
+        $pengajuan = Pengajuan::find($id);
         $pengajuan->nama_tempat = $request->nama_tempat;
         $pengajuan->nama_acara = $request->nama_acara;
         $pengajuan->jumlah_peserta = $request->jumlah_peserta;
@@ -488,7 +486,7 @@ class APIController extends Controller
         $pengajuan->jam_selesai = $request->jam_selesai;
         $pengajuan->alamat = $request->alamat;
         $pengajuan->penanggung_jawab = $request->penanggung_jawab;
-        $pengajuan->save();
+        $pengajuan->update();
 
         if($pengajuan){
             return response()->json([
@@ -505,9 +503,8 @@ class APIController extends Controller
         }
     }
 
-    public function deletePengajuan(Request $request)
+    public function deletePengajuan($id)
     {
-        $id = $request->id;
         $delete = Pengajuan::where('id',$id)->delete();
         if($delete){
             return response()->json([
