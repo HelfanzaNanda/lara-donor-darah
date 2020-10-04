@@ -74,19 +74,20 @@ class APIController extends Controller
 
         if (Auth::guard('web')->attempt($credential)){
             $user = Auth::guard('web')->user();
-            if ($user->email_verified_at !== null){
-                return response()->json([
-                    'message' => 'Login Successfully',
-                    'status' => true,
-                    'data' => $user,
-                ], 200);
-            }else{
-                return response()->json([
-                    'message' => 'Silahkan Aktifasi Email Dahulu',
-                    'status' => false,
-                    'data' => []
-                ], 401);
-            }
+            return response()->json([
+                'message' => 'Login Successfully',
+                'status' => true,
+                'data' => $user,
+            ], 200);
+            // if ($user->email_verified_at !== null){
+                
+            // }else{
+            //     return response()->json([
+            //         'message' => 'Silahkan Aktifasi Email Dahulu',
+            //         'status' => false,
+            //         'data' => []
+            //     ], 401);
+            // }
         }
         return response()->json([
             'message' => 'Masukan Email dan Password yang benar',
