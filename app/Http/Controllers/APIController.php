@@ -418,7 +418,7 @@ class APIController extends Controller
             'tanggal' => $request->tanggal,
             'jam_mulai' => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
-            'alamat' => $request->alamat,
+            'alamat' => $request->alamat. ' '. $request->kota,
             'penanggung_jawab' => $request->penanggung_jawab,
             'status' => 'pending',
         ]);
