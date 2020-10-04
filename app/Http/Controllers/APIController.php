@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendForgotPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class APIController extends Controller
@@ -27,11 +28,21 @@ class APIController extends Controller
 
     public function userRegister(Request $request)
     {
-        $this->validate($request, [
+        $rules = [
             'nama' => 'required',
-            'email' => 'required',
+            'email' => 'required|unique:users',
             'password' => 'required'
-        ]);
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->fails()){
+            return response()->json([
+                'message' => $validator->errors(),
+                'status' => false,
+                'data' => (object)[]
+            ]);
+        }
+
 
         $user = User::create([
             'nama'       => $request->nama,
