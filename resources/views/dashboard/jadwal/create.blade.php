@@ -67,28 +67,24 @@
                             <option value="Sabtu">Sabtu</option>
                             <option value="Minggu">Minggu</option>
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="form-group" style="margin-top:0px;">
                         <label>Tanggal</label>
-                        <input type="text" class="form-control datepicker" name="tanggal" placeholder="">
-                    </div> --}}
+                        <input type="text" class="form-control datepicker" name="tanggal" readonly style="cursor: pointer;">
+                    </div> 
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="bootstrap-timepicker">
-                                <div class="form-group" style="margin-top:0px;">
-                                    <label>Jam Mulai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_mulai" 
-                                    readonly style="cursor: pointer;" placeholder="08:00">
-                                </div>
+                            <div class="form-group" style="margin-top:0px;">
+                                <label>Jam Mulai</label>
+                                <input type="text" class="form-control timepicker" name="jam_mulai"
+                                readonly style="cursor: pointer;" placeholder="08:00">
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="bootstrap-timepicker">
-                                <div class="form-group" style="margin-top:0px;">
-                                    <label>Jam Selesai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_selesai" 
-                                    readonly style="cursor: pointer;" placeholder="04:00">
-                                </div>
+                            <div class="form-group" style="margin-top:0px;">
+                                <label>Jam Selesai</label>
+                                <input type="text" class="form-control timepicker" name="jam_selesai" 
+                                readonly style="cursor: pointer;" placeholder="04:00">
                             </div>
                         </div>
 
@@ -214,7 +210,7 @@ $(document).ready(function() {
     
   })
 
-  $('.timepicker').timepicker({
+    $('.timepicker').timepicker({
         timeFormat: 'h:mm p',
         interval: 30,
         dynamic: true,

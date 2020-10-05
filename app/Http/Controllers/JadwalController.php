@@ -39,7 +39,7 @@ class JadwalController extends Controller
         $customAttributes = [
             'nama_tempat' => 'Nama Lokasi',
             //'hari' => 'Hari',
-            //'tanggal' => 'Tanggal',
+            'tanggal' => 'Tanggal',
             'jam_mulai' => 'Jam Mulai',
             'jam_selesai' => 'Jam Selesai',
             'alamat' => 'Alamat Lokasi',
@@ -49,7 +49,7 @@ class JadwalController extends Controller
         $valid = $request->validate([
             'nama_tempat' => 'required|regex:/(^[A-Za-z0-9 ]+$)+/',
             //'hari' => 'required',
-            //'tanggal' => 'required',
+            'tanggal' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
             'alamat' => 'required',
@@ -67,8 +67,8 @@ class JadwalController extends Controller
             $data_jadwal = new Jadwal([
                 'nama_tempat' => $request->get('nama_tempat'),
                 //'hari' => $request->get('hari'),
-                'hari' => Carbon::create($dayEnglish)->locale('id_ID')->dayName,
-                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'hari' => Carbon::create($request->tanggal)->locale('id_ID')->dayName,
+                'tanggal' => Carbon::parse($request->tanggal)->format('Y-m-d'),
                 'jam_mulai' => $request->get('jam_mulai'),
                 'jam_selesai' => $request->get('jam_selesai'),
                 'alamat' => $request->get('alamat'),
