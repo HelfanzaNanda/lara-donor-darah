@@ -55,7 +55,7 @@
                         <label>Nama Lokasi</label>
                         <input type="text" class="form-control" name="nama_tempat" placeholder="Masukan Tempat">
                     </div>
-                    <div class="form-group" style="margin-top:10px;">
+                    {{-- <div class="form-group" style="margin-top:10px;">
                         <label>Hari</label>
                         <select name="hari" class="form-control">
                             <option value="">Pilih Hari</option>
@@ -71,13 +71,14 @@
                     <div class="form-group" style="margin-top:0px;">
                         <label>Tanggal</label>
                         <input type="text" class="form-control datepicker" name="tanggal" placeholder="">
-                    </div>
+                    </div> --}}
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="bootstrap-timepicker">
                                 <div class="form-group" style="margin-top:0px;">
                                     <label>Jam Mulai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_mulai" placeholder="08:00">
+                                    <input type="text" class="form-control timepicker" name="jam_mulai" 
+                                    readonly style="cursor: pointer;" placeholder="08:00">
                                 </div>
                             </div>
                         </div>
@@ -85,10 +86,12 @@
                             <div class="bootstrap-timepicker">
                                 <div class="form-group" style="margin-top:0px;">
                                     <label>Jam Selesai</label>
-                                    <input type="text" class="form-control timepicker" name="jam_selesai" placeholder="12:00">
+                                    <input type="text" class="form-control timepicker" name="jam_selesai" 
+                                    readonly style="cursor: pointer;" placeholder="04:00">
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="form-group" style="margin-top:0px;">
                         <label>Alamat</label>
@@ -154,8 +157,9 @@
   <link rel="stylesheet" href="/assets/material/plugins/iCheck/all.css">
   <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="/assets/material/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
   <!-- Bootstrap time Picker -->
-  <link rel="stylesheet" href="/assets/material/plugins/timepicker/bootstrap-timepicker.min.css">
+  {{-- <link rel="stylesheet" href="/assets/material/plugins/timepicker/bootstrap-timepicker.min.css"> --}}
 @endpush
 
 @push('footer')
@@ -191,13 +195,33 @@ $(document).ready(function() {
 <script src="/assets/material/bower_components/moment/min/moment.min.js"></script>
 <script src="/assets/material/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 <!-- bootstrap datepicker -->
-<script src="/assets/material/plugins/timepicker/bootstrap-timepicker.min.js"></script>
+{{-- <script src="/assets/material/plugins/timepicker/bootstrap-timepicker.min.js"></script> --}}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+
 <script>
   $(function () {
     //Timepicker
-    $('.timepicker').timepicker({
-      showInputs: false
-    })
+//     $('.timepicker').timepicker({
+//       showInputs: false, 
+//       disabledTimeIntervals: [
+//       [moment().hour(0).minutes(0), moment().hour(8).minutes(30)],
+//       [moment().hour(20).minutes(30), moment().hour(24).minutes(0)]
+//    ]
+//     })
+
+    
   })
+
+  $('.timepicker').timepicker({
+        timeFormat: 'h:mm p',
+        interval: 30,
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true,
+        minTime: '8:00am',
+        maxTime: '4:00pm',
+    });
 </script>
 @endpush

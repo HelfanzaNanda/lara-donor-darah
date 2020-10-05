@@ -38,8 +38,8 @@ class JadwalController extends Controller
 
         $customAttributes = [
             'nama_tempat' => 'Nama Lokasi',
-            'hari' => 'Hari',
-            'tanggal' => 'Tanggal',
+            //'hari' => 'Hari',
+            //'tanggal' => 'Tanggal',
             'jam_mulai' => 'Jam Mulai',
             'jam_selesai' => 'Jam Selesai',
             'alamat' => 'Alamat Lokasi',
@@ -48,8 +48,8 @@ class JadwalController extends Controller
 
         $valid = $request->validate([
             'nama_tempat' => 'required|regex:/(^[A-Za-z0-9 ]+$)+/',
-            'hari' => 'required',
-            'tanggal' => 'required',
+            //'hari' => 'required',
+            //'tanggal' => 'required',
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
             'alamat' => 'required',
@@ -63,11 +63,12 @@ class JadwalController extends Controller
             $cover = $request->file('foto');
             $extension = $cover->getClientOriginalExtension();
             Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
-            
+            $dayEnglish = Carbon::now()->format('l');
             $data_jadwal = new Jadwal([
                 'nama_tempat' => $request->get('nama_tempat'),
-                'hari' => $request->get('hari'),
-                'tanggal' => Carbon::parse($request->get('tanggal'))->format('y/m/d'),
+                //'hari' => $request->get('hari'),
+                'hari' => Carbon::create($dayEnglish)->locale('id_ID')->dayName,
+                'tanggal' => Carbon::now()->format('Y-m-d'),
                 'jam_mulai' => $request->get('jam_mulai'),
                 'jam_selesai' => $request->get('jam_selesai'),
                 'alamat' => $request->get('alamat'),
