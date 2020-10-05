@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendForgotPassword;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -20,6 +21,8 @@ use Illuminate\Support\Str;
 
 class APIController extends Controller
 {
+    use VerifiesEmails;
+
     public function __construct()
     {
         $this->middleware('auth:api')->only(['profile', 'updateUser', 'upload',
@@ -53,6 +56,7 @@ class APIController extends Controller
             'password'   => Hash::make($request->password),
             'api_token'  => Str::random(80)
         ]);
+        $user->sendApiEmailVerificationNotification();
 
         if($user){
             return response()->json([
@@ -85,26 +89,44 @@ class APIController extends Controller
 
         if (Auth::guard('web')->attempt($credential)){
             $user = Auth::guard('web')->user();
-            return response()->json([
-                'message' => 'Login Successfully',
-                'status' => true,
-                'data' => $user,
-            ], 200);
-            // if ($user->email_verified_at !== null){
-                
-            // }else{
-            //     return response()->json([
-            //         'message' => 'Silahkan Aktifasi Email Dahulu',
-            //         'status' => false,
-            //         'data' => []
-            //     ], 401);
-            // }
+            if ($user->email_verified_at !== null){
+                return response()->json([
+                    'message' => 'Login Successfully',
+                    'status' => true,
+                    'data' => $user,
+                ], 200);
+            }else{
+                return response()->json([
+                    'message' => 'Silahkan Aktifasi Email Dahulu',
+                    'status' => false,
+                    'data' => []
+                ], 401);
+            }
         }
         return response()->json([
             'message' => 'Masukan Email dan Password yang benar',
             'status' => false,
             'data' => (object)[]
         ], 401);
+    }
+
+    public function verify(Request $request)
+    {
+        $id = $request['id'];
+        $user = User::findOrFail($id);
+        $date = date("Y-m-d g:i:s");
+        $user->email_verified_at = $date;
+        $user->save();
+        return response()->json('Email Verified!');
+    }
+
+    public function resend(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return response()->json('User already has verified email', 422);
+        }
+        $request->user()->sendEmailVerificationNotification();
+        return response()->json('The notification has been resubmitted');
     }
 
     public function profile()

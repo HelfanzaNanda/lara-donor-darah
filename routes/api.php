@@ -23,6 +23,8 @@ Route::get('/user/profile', 'APIController@profile');// url api untuk detail pro
 Route::post('/user/update', 'APIController@updateUser');//url api unntuk update profile
 Route::post('/user/upload', 'APIController@upload');//url api upload foto profile
 Route::post('/forgotpassword', 'APIController@forgotPassword');//forgot password
+Route::get('email/verify/{id}', 'APIController@verify')->name('api.verification.verify');
+Route::get('email/resend', 'APIController@resend')->name('api.verification.resend');
 
 //ini url untuk nampilin informasi, secara default ketika akses akan diarahkan ke
 //http://domain/donor-darah/public/api/
