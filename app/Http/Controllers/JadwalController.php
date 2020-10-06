@@ -14,9 +14,14 @@ class JadwalController extends Controller
 {
 
     public function __construct()
-    {
-        $dateNow = Carbon::now()->format('y/m/d');
-        $check = Jadwal::where('tanggal','<=',$dateNow)->update(['status'=>'selesai']);
+    {        
+        $dateNow = Carbon::now()->format('Y-m-d');
+        $schedulles = Jadwal::whereDate('tanggal','<=',$dateNow)->get();
+        foreach ($schedulles as $schedulle) {
+            $schedulle->update([
+                'status' => 'selesai',
+            ]);
+        }
     }
     
     public function index()
