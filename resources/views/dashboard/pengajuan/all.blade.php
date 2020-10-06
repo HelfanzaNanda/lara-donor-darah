@@ -35,6 +35,7 @@
                     <th width="150">Waktu</th>
                     <th width="250">Alamat</th>
                     <th width="200">Penanggung Jawab</th>
+                    <th>Status</th>
                     <th width="60">Action</th>
                     </tr>
                 </thead>
@@ -47,6 +48,13 @@
                         <th width="150">{{$p->jam_mulai}} - {{$p->jam_selesai}}</th>
                         <th width="250">{{$p->alamat}}</th>
                         <th width="200">{{$p->penanggung_jawab}}</th>
+                        @if ($p->status == 'diterima')
+                            <th> <span class="badge badge-success">{{$p->status}}</span></th>
+                        @elseif ($p->status == 'pending')
+                            <th> <span class="badge badge-warning">{{$p->status}}</span></th>
+                        @else
+                            <th> <span class="badge badge-danger">{{$p->status}}</span></th>
+                        @endif
                         <th width="60"><a href="{{route('pengajuan.edit',$p->id)}}" class="btn btn-primary bg-blue btn-xs"><span class="fa fa-pencil"></span> Edit</a></th>
                     </tr>
                     @endforeach
