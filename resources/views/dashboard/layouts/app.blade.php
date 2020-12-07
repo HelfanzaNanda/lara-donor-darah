@@ -81,6 +81,10 @@
             <li class="{{ Route::currentRouteName() == 'order.all' ? 'active' : '' }}">
               <a href="{{route('order.all')}}">Pesan Darah</a>
             </li>
+
+            <li class="{{ Route::currentRouteName() == 'report.index' ? 'active' : '' }}">
+              <a href="{{route('report.index')}}">Laporan</a>
+            </li>
             @endif
           </ul>
         </div>

@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
@@ -124,6 +128,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             Route::get('/', 'CariDarahController@index')->name('cari.index');
             Route::get('show', 'CariDarahController@show')->name('cari.show');
             Route::get('data-darah', 'CariDarahController@getData')->name('cari.getdata');
+            Route::get('report', 'ReportController@index')->name('report.index');
+            Route::post('report/search', 'ReportController@search')->name('report.search');
+            Route::post('report/pdf', 'ReportController@pdf')->name('report.pdf');
         });
         
         Route::group(['prefix' => 'o'], function(){

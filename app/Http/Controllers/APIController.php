@@ -75,16 +75,10 @@ class APIController extends Controller
     }
 
     public function userLogin(Request $request)
-    {
-        $input = $request->all();
-
-        //$role = "pendonor";
-        $role = $request->role;
-        
+    {   
         $credential = [
-            'email' => $request->email,
-            'password' => $request->password,
-
+            'email'     => $request->email,
+            'password'  => $request->password,
         ];
 
         if (Auth::guard('web')->attempt($credential)){
