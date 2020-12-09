@@ -44,3 +44,6 @@ Route::get('/stock', 'APIController@getStockDarah');
 Route::post('/pendonor/add', 'APIController@addPendonor');
 Route::get('/pendonor', 'APIController@getPendonor');
 Route::post('/pendonor/{id}/update', 'APIController@updatePendonor');
+
+
+Route::get('chart', 'APIController@chart');

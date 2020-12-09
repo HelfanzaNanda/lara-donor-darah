@@ -25,8 +25,37 @@ class APIController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api')->only(['profile', 'updateUser', 'upload',
+        $this->middleware('auth:api')->only(['chart','profile', 'updateUser', 'upload',
         'getPendonor', 'getPengajuan', 'createPengajuan', 'addPendonor']);
+    }
+
+    public function chart()
+    {
+        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+        'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        
+        $user = Auth::user();
+
+        $result = [];
+        foreach ($months as $key => $month) {
+            $donor = Pendonor::where('user_id', $user->id)
+            ->whereMonth('created_at', $key+1)->get()->count();
+
+            $item =  [
+                'month' => $month,
+                'count' => $donor
+            ];
+
+            array_push($result, $item);
+
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'status' => true,
+            'data' => $result
+        ]);
+
     }
 
     public function userRegister(Request $request)
