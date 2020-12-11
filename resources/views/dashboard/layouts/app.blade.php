@@ -68,6 +68,8 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{route('laporan.darah')}}">Laporan Darah</a></li>
                 <li><a href="{{route('laporan.jadwal')}}">Laporan Jadwal</a></li>
+                <li><a href="{{route('laporan.rs')}}">Laporan Rumah Sakit</a></li>
+                <li><a href="{{route('laporan.pengguna')}}">Laporan Pengguna</a></li>
               </ul>
             </li>
             <li class="{{ Route::currentRouteName() == 'user.index' ? 'active' : ''}}">

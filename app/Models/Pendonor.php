@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Pendonor extends Model
@@ -14,6 +15,11 @@ class Pendonor extends Model
     public function getUser()
     {
         return $this->belongsTo('App\User','user_id','id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
     

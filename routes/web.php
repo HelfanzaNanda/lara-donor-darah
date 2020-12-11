@@ -66,6 +66,15 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::post('notif-pendonor', 'PendonorController@sendNotif')->name('pendonor.butuhdarah');
         Route::post('notif-status', 'PendonorController@sendStatus')->name('pendonor.selesaidarah');
     });
+
+    Route::group(['prefix' => 'report', 'middleware' => 'auth.isPmi'], function () {
+        Route::get('rs', 'PmiReportController@rs')->name('laporan.rs');
+        Route::post('rs/search', 'PmiReportController@rsSearch')->name('laporan.rs.search');
+        Route::post('rs/pdf', 'PmiReportController@rsPdf')->name('laporan.rs.pdf');
+        Route::get('pengguna', 'PmiReportController@pengguna')->name('laporan.pengguna');
+        Route::post('pengguna/search', 'PmiReportController@penggunaSearch')->name('laporan.pengguna.search');
+        Route::post('pengguna/pdf', 'PmiReportController@penggunaPdf')->name('laporan.pengguna.pdf');
+    });
     
     Route::group(['prefix' => 'darah', 'middleware' => 'auth.isPmi'], function(){
         Route::group(['prefix' => 'order'], function(){
