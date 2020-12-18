@@ -152,7 +152,8 @@ class JadwalController extends Controller
 
     public function getdata()
     {
-        $query = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status',null);
+        $query = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status',null)
+        ->whereDate('tanggal', '>=', Carbon::now()->format('Y-m-d'));
 
         return DataTables::of($query)
                 ->editColumn('nama', function ($jadwal) {
