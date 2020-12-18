@@ -43,6 +43,7 @@ class APIController extends Controller
 
             $item =  [
                 'month' => $month,
+            
                 'count' => $donor
             ];
 
@@ -291,7 +292,9 @@ class APIController extends Controller
 
     public function getJadwal()
     {
-        $getInformation = Jadwal::orderBy('tanggal', 'ASC')->get();
+        $getInformation = Jadwal::whereDate('tanggal' >= now())
+        ->orderBy('tanggal', 'ASC')->get();
+        
         if($getInformation){
             $result = [];
             foreach($getInformation as $u){
