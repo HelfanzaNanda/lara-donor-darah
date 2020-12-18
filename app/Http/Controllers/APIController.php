@@ -293,7 +293,7 @@ class APIController extends Controller
 
     public function getJadwal()
     {
-        $getInformation = Jadwal::whereDate('tanggal' >= Carbon::now()->format('Y-m-d'))
+        $getInformation = Jadwal::whereDate('tanggal', '>=', Carbon::now()->format('Y-m-d'))
         ->orderBy('tanggal', 'ASC')->get();
 
         $result = [];
