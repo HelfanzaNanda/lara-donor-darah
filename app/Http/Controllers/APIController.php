@@ -296,8 +296,7 @@ class APIController extends Controller
         $getInformation = Jadwal::whereDate('tanggal' >= Carbon::now())
         ->orderBy('tanggal', 'ASC')->get();
 
-        if($getInformation){
-            $result = [];
+        $result = [];
             foreach($getInformation as $u){
                 $data = [
                     "id" => $u->id,
@@ -316,13 +315,6 @@ class APIController extends Controller
                 'status' => true,
                 'data' => $result
             ]);
-        }else{
-            return response()->json([
-                'message' => 'error',
-                'status' => false,
-                'data' => (object)[]
-            ]);
-        }
     }
 
 
