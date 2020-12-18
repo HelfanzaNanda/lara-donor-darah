@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendForgotPassword;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -292,9 +293,9 @@ class APIController extends Controller
 
     public function getJadwal()
     {
-        $getInformation = Jadwal::whereDate('tanggal' >= now())
+        $getInformation = Jadwal::whereDate('tanggal' >= Carbon::now())
         ->orderBy('tanggal', 'ASC')->get();
-        
+
         if($getInformation){
             $result = [];
             foreach($getInformation as $u){
