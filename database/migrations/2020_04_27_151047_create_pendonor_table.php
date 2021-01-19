@@ -30,7 +30,7 @@ class CreatePendonorTable extends Migration
             $table->string('status_nikah', 20);
             $table->string('phone', 30);
             $table->string('gol_dar', 2);
-            //$table->string('rhesus', 1);
+            $table->string('rhesus', 1)->nullable();
             $table->timestamps();
         });
     }
