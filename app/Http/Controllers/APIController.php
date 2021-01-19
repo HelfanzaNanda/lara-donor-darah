@@ -416,7 +416,7 @@ class APIController extends Controller
             'status_nikah' => $request->status_nikah,
             'phone' => $request->phone,
             'gol_dar' => $request->gol_dar,
-            'rhesus' => $request->rhesus,
+            //'rhesus' => $request->rhesus,
         ]);
 
         if($data_pendonor){
