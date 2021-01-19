@@ -42,7 +42,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
     Route::get('profile', 'UserController@profile')->name('profile');
     Route::put('profile', 'UserController@profileUpdate')->name('profile.update');
 
-    
+
     Route::group(['prefix' => 'informasi', 'middleware' => 'auth.isPmi'], function(){
         Route::get('/', 'InformasiController@index')->name('informasi.index');
         Route::get('create', 'InformasiController@create')->name('informasi.create');
@@ -56,6 +56,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
     Route::group(['prefix' => 'pendonor', 'middleware' => 'auth.isPmi'], function(){
         Route::get('/', 'PendonorController@index')->name('pendonor.index');
         Route::get('create', 'PendonorController@create')->name('pendonor.create');
+        Route::post('ktp', 'PendonorController@getKtp')->name('pendonor.ktp');
         Route::post('create', 'PendonorController@store')->name('pendonor.store');
         Route::get('edit/{id}', 'PendonorController@edit')->name('pendonor.edit');
         Route::get('show/{id}', 'PendonorController@show')->name('pendonor.show');
@@ -75,7 +76,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::post('pengguna/search', 'PmiReportController@penggunaSearch')->name('laporan.pengguna.search');
         Route::post('pengguna/pdf', 'PmiReportController@penggunaPdf')->name('laporan.pengguna.pdf');
     });
-    
+
     Route::group(['prefix' => 'darah', 'middleware' => 'auth.isPmi'], function(){
         Route::group(['prefix' => 'order'], function(){
             Route::get('/', 'PermintaanController@index')->name('permintaan.index');
@@ -101,7 +102,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             Route::get('lap-darah-keluar', 'StockDarahController@cetak_lapKeluar')->name('darah.lapkeluar');
         });
     });
-    
+
     Route::group(['prefix' => 'jadwal', 'middleware' => 'auth.isPmi'], function(){
         Route::get('/', 'JadwalController@index')->name('jadwal.index');
         Route::get('create', 'JadwalController@create')->name('jadwal.create');
@@ -111,12 +112,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::put('update/{id}', 'JadwalController@update')->name('jadwal.update');
         Route::get('{id}/delete', 'JadwalController@destroy')->name('jadwal.delete');
         Route::get('data-jadwal', 'JadwalController@getdata')->name('jadwal.getdata');
-        
+
         Route::get('laporan', 'JadwalController@lapJadwal')->name('laporan.jadwal');
         Route::get('jadwal-selesai', 'JadwalController@cetak_jadwal_selesai')->name('jadwal.selesai');
         Route::get('jadwal-batal', 'JadwalController@cetak_jadwal_batal')->name('jadwal.batal');
     });
-    
+
     Route::group(['prefix' => 'pengajuan', 'middleware' => 'auth.isPmi'], function(){
         Route::get('/', 'PengajuanController@index')->name('pengajuan.index');
         Route::get('edit/{id}', 'PengajuanController@edit')->name('pengajuan.edit');
@@ -141,18 +142,18 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
             Route::post('report/search', 'ReportController@search')->name('report.search');
             Route::post('report/pdf', 'ReportController@pdf')->name('report.pdf');
         });
-        
+
         Route::group(['prefix' => 'o'], function(){
             Route::get('/', 'CariDarahController@index')->name('order.index');
             Route::get('show', 'CariDarahController@show')->name('order.show');
-            
+
             Route::get('edit/{id}', 'PermintaanController@editCheckout')->name('order.editCheckout');
             Route::put('update/{id}', 'PermintaanController@updateCheckout')->name('order.updateCheckout');
             Route::get('data-order', 'PermintaanController@getData')->name('order.getdata');
             Route::get('all', 'PermintaanController@getAll')->name('order.all');
             Route::get('checkout/{id}','PermintaanController@checkout')->name('order.checkout');
             Route::post('checkout','PermintaanController@storeCheckout')->name('order.storecheckout');
-            
+
             Route::get('create', 'PermintaanController@create')->name('order.create');
         });
 

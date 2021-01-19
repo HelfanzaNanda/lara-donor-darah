@@ -17,6 +17,8 @@ use App\Mail\NotifTidakLayakDonor;
 use App\Mail\NotifSelesaiDonor;
 use Form;
 use Collective\Html\FormFacade;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class PendonorController extends Controller
 {
@@ -32,6 +34,16 @@ class PendonorController extends Controller
         return view('dashboard.pendonor.create', $data);
     }
 
+    public function getKtp(Request $request)
+    {
+        //return $request->all();
+        $nik = $request->nik;
+        $url = "http://103.12.164.52:8185/ws_server/get_json/diskominfo/NEWNIK?USER_ID=kominfo&PASSWORD=123456&NIK=";
+        $client = new Client();
+        $response = $client->get($url.$nik);
+        return $response->getBody();
+    }
+
     public function store(Request $request)
     {
         $messages = [
@@ -39,7 +51,8 @@ class PendonorController extends Controller
             'regex'    => ':attribute harus berupa karakter alphabet.',
             'numeric'  => ':attribute harus berupa karakter numerik',
             'ktp.digits_between' => ':attribute harus 16 karakter',
-            'phone.digits_between' => ':attribute harus diantara 11 - 12'
+            'phone.digits_between' => ':attribute harus diantara 11 - 12',
+            'in' => ':attribute harus di antara A,B,AB,O'
         ];
 
         $customAttributes = [
@@ -57,28 +70,28 @@ class PendonorController extends Controller
             'status_nikah' => 'Status Nikah',
             'phone' => 'Nomor Telepon',
             'gol_dar' => 'Golongan Darah',
-            'rhesus' => 'Rhesus',
+            //'rhesus' => 'Rhesus',
         ];
 
         $valid = $request->validate([
-            'ktp' => 'required|numeric|digits_between:16,17',
-            'nama' => 'required|regex:/^[\pL\s\-]+$/u',
-            'kabupaten' => 'required',
-            'kecamatan' => 'required',
-            'desa' => 'required',
-            'alamat' => 'required',
-            'jenis_kelamin' => 'required',
-            'tempat_lahir' => 'required|regex:/^[\pL\s\-]+$/u',
-            'tanggal_lahir' => 'required',
-            'pekerjaan' => 'required|regex:/^[\pL\s\-]+$/u',
-            'nama_ibu' => 'required|regex:/^[\pL\s\-]+$/u',
-            'status_nikah' => 'required|regex:/^[\pL\s\-]+$/u',
+            // 'ktp' => 'required|numeric|digits_between:16,17',
+            // 'nama' => 'required|regex:/^[\pL\s\-]+$/u',
+            // 'kabupaten' => 'required',
+            // 'kecamatan' => 'required',
+            // //'desa' => 'required',
+            // 'alamat' => 'required',
+            // 'jenis_kelamin' => 'required',
+            // 'tempat_lahir' => 'required|regex:/^[\pL\s\-]+$/u',
+            // 'tanggal_lahir' => 'required',
+            // 'pekerjaan' => 'required|regex:/^[\pL\s\-]+$/u',
+            // 'nama_ibu' => 'required|regex:/^[\pL\s\-]+$/u',
+            // 'status_nikah' => 'required|regex:/^[\pL\s\-]+$/u',
             'phone' => 'required|numeric|digits_between:11,13',
-            'gol_dar' => 'required',
-            'rhesus' => 'required'
+            'gol_dar' => 'required|in:A,B,AB,O',
+            //'rhesus' => 'required'
         ],$messages,$customAttributes);
 
-        if($valid == true){            
+        if($valid == true){
             $data_pendonor = new Pendonor([
                 'ktp' => $request->get('ktp'),
                 'nama' => $request->get('nama'),
@@ -91,14 +104,14 @@ class PendonorController extends Controller
                 'tanggal_lahir' => $request->get('tanggal_lahir'),
                 'pekerjaan' => $request->get('pekerjaan'),
                 'nama_ibu' => $request->get('nama_ibu'),
-                'status_nikah' => $request->get('status_nikah'),
+                'status_nikah' => $request->get('status_menikah'),
                 'phone' => $request->get('phone'),
                 'gol_dar' => $request->get('gol_dar'),
-                'rhesus' => $request->get('rhesus'),
+                //'rhesus' => $request->get('rhesus'),
             ]);
-            
+
             $data_pendonor->save();
-            
+
             return redirect()->route('pendonor.index')->with('success','Pendonor berhasil ditambah.');
         }
         else {
@@ -167,7 +180,7 @@ class PendonorController extends Controller
             'rhesus' => 'required'
         ],$messages,$customAttributes);
 
-        if($valid == true){            
+        if($valid == true){
             $pendonor = Pendonor::find($id);
             $pendonor->ktp = $request->ktp;
             $pendonor->nama = $request->nama;
@@ -191,16 +204,16 @@ class PendonorController extends Controller
 
             if($pendonor->user_id != null){
                 if($pendonor->status_donor == 'layak'){
-                    $cek = Pendonor::find($pendonor->id);        
+                    $cek = Pendonor::find($pendonor->id);
                     $user = User::find($cek->user_id);
                     Mail::to($user->email)->send(new NotifLayakDonor($user, $cek));
                 }
-                
+
                 if($pendonor->status_donor == 'belum layak'){
                     $cek = Pendonor::find($pendonor->id);
                     $user = User::find($cek->user_id);
                     Mail::to($user->email)->send(new NotifTidakLayakDonor($user, $cek));
-                }   
+                }
             }
             return redirect()->route('pendonor.index')->with('success','Pendonor berhasil diubah.');
         }
@@ -229,7 +242,7 @@ class PendonorController extends Controller
         return DataTables::of($query)
                 ->editColumn('nama', function ($pendonor) {
                     $output = '';
-                        if($pendonor->jenis_kelamin == 'laki-laki'){
+                        if($pendonor->jenis_kelamin == 'LAKI-LAKI'){
                             $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-green">L</span>)';
                         }else{
                             $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-navy">P</span>)';
@@ -271,7 +284,7 @@ class PendonorController extends Controller
         $kecamatan = DB::table("kecamatan")->where("kabupaten_id",$id)->pluck("nama","id");
         return json_encode($kecamatan);
     }
-    
+
     public function getDesa($id)
     {
         // $kecamatan = Kecamatan::select(['kabupaten_id','nama'])->where('kabupaten_id', $id)->get();
@@ -283,18 +296,18 @@ class PendonorController extends Controller
     {
         // $status = $request->status;
         $pendonor = Pendonor::find($request->id_pendonor);
-        
+
         $user = User::find($pendonor->user_id);
         Mail::to($user->email)->send(new NotifButuhDarah($user, $pendonor));
 
         return redirect()->back()->with('success','Notifikasi telah di kirim ke '.$user->email);
     }
-    
+
     public function sendStatus(Request $request)
     {
         // $status = $request->status;
         $pendonor = Pendonor::find($request->id_pendonor);
-        
+
         $user = User::find($pendonor->user_id);
         Mail::to($user->email)->send(new NotifSelesaiDonor($user, $pendonor));
 

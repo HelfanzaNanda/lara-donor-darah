@@ -34,7 +34,7 @@ class APIController extends Controller
     {
         $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
         'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        
+
         $user = Auth::user();
 
         $result = [];
@@ -44,7 +44,7 @@ class APIController extends Controller
 
             $item =  [
                 'month' => $month,
-            
+
                 'count' => $donor
             ];
 
@@ -77,17 +77,29 @@ class APIController extends Controller
             ]);
         }
 
-
-        $user = User::create([
-            'nama'       => $request->nama,
-            'email'      => $request->email,
-            'phone'      => "08923423455",
-            //'role'       => 'pendonor',
-            'role'       => $request->role,
-            'password'   => Hash::make($request->password),
-            'api_token'  => Str::random(80)
-        ]);
-        $user->sendApiEmailVerificationNotification();
+        if ($request->email != 'kristinadamayanti18@gmail.com') {
+            $user = User::create([
+                'nama'       => $request->nama,
+                'email'      => $request->email,
+                'phone'      => "08923423455",
+                'email_verified_at' => now(),
+                //'role'       => 'pendonor',
+                'role'       => $request->role,
+                'password'   => Hash::make($request->password),
+                'api_token'  => Str::random(80)
+            ]);
+        }else{
+            $user = User::create([
+                'nama'       => $request->nama,
+                'email'      => $request->email,
+                'phone'      => "08923423455",
+                //'role'       => 'pendonor',
+                'role'       => $request->role,
+                'password'   => Hash::make($request->password),
+                'api_token'  => Str::random(80)
+            ]);
+            $user->sendApiEmailVerificationNotification();
+        }
 
         if($user){
             return response()->json([
@@ -95,7 +107,7 @@ class APIController extends Controller
                 'status' => true,
                 'data' => (object)[]
             ]);
-            
+
         }else{
             return response()->json([
                 'message' => 'error',
@@ -106,7 +118,7 @@ class APIController extends Controller
     }
 
     public function userLogin(Request $request)
-    {   
+    {
         $credential = [
             'email'     => $request->email,
             'password'  => $request->password,
