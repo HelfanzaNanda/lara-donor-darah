@@ -88,6 +88,11 @@ class APIController extends Controller
                 'password'   => Hash::make($request->password),
                 'api_token'  => Str::random(80)
             ]);
+            return response()->json([
+                'message' => 'success',
+                'status' => true,
+                'data' => (object)[]
+            ]);
         }else{
             $user = User::create([
                 'nama'       => $request->nama,
@@ -99,22 +104,14 @@ class APIController extends Controller
                 'api_token'  => Str::random(80)
             ]);
             $user->sendApiEmailVerificationNotification();
-        }
 
-        if($user){
             return response()->json([
-                'message' => 'success',
+                'message' => 'kami telah mengirimkan email',
                 'status' => true,
                 'data' => (object)[]
             ]);
-
-        }else{
-            return response()->json([
-                'message' => 'error',
-                'status' => false,
-                'data' => (object)[]
-            ]);
         }
+
     }
 
     public function userLogin(Request $request)
