@@ -97,7 +97,7 @@ class PendonorController extends Controller
                 'nama' => $request->get('nama'),
                 'kabupaten' => $request->get('kabupaten'),
                 'kecamatan' => $request->get('kecamatan'),
-                'desa' => $request->get('desa'),
+                'desa' => $request->get('kelurahan'),
                 'alamat' => $request->get('alamat'),
                 'jenis_kelamin' => $request->get('jenis_kelamin'),
                 'tempat_lahir' => $request->get('tempat_lahir'),
@@ -242,18 +242,18 @@ class PendonorController extends Controller
         return DataTables::of($query)
                 ->editColumn('nama', function ($pendonor) {
                     $output = '';
-                        if($pendonor->jenis_kelamin == 'LAKI-LAKI'){
-                            $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-green">L</span>)';
-                        }else{
-                            $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-navy">P</span>)';
-                        }
-                        return $output;
-                    })
+                    if($pendonor->jenis_kelamin == 'LAKI-LAKI'){
+                        $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-green">L</span>)';
+                    }else{
+                        $output = '<a href="'.route('pendonor.show',$pendonor->id).'">' . ucwords($pendonor->nama) . '</a>  (<span class="text-navy">P</span>)';
+                    }
+                    return $output;
+                })
                 ->editColumn('alamat', function ($pendonor) {
                     if($pendonor->kabupaten == NULL){
                         $output = ucwords($pendonor->alamat);
                     }else{
-                        $output = ucwords($pendonor->alamat) . ', <br>' . ucwords($pendonor->cek_desa->nama) . ', ' . ucwords($pendonor->cek_kecamatan->nama) . ', ' . ucwords($pendonor->cek_kabupaten->nama);
+                        $output = ucwords($pendonor->alamat) . ', <br>' . ucwords($pendonor->desa) . ', ' . ucwords($pendonor->kecamatan) . ', ' . ucwords($pendonor->kabupaten);
                     }
                     return $output;
                     })
