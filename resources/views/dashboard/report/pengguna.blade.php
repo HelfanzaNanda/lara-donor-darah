@@ -3,19 +3,47 @@
 
 @section('content')
 <div class="row">
+
     <div class="box">
         <div class="box-header">
+            <!-- Button trigger modal -->
+            {{-- <button type="button" class="d-inline btn btn-primary btn-sm bg-warning" data-toggle="modal" data-target="#filter-modal">
+                Filter
+            </button> --}}
             <form action="{{ route('laporan.pengguna.search') }}" method="POST">
                 @csrf
-                <div class="form-group pull-left" style="margin-top: 0px; width:100px; margin-right:10px;">
-                    <select name="month" class="form-control" id="select-month">
-                        <option>Pilih Bulan</option>                        
-                        @foreach ($months as $key => $month)
-                            <option value="{{ $key+1 }}"{{ $numberMonth == $key+1 ? 'selected' : '' }}>{{ $month }}</option>
-                        @endforeach
-                    </select>
+                <div class="row">
+                    <div class="col-md-1">
+                        <input type="time" name="time" id="time" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <select name="month" class="form-control" id="select-month">
+                            <option selected disabled>Pilih Bulan</option>
+                            @foreach ($months as $key => $month)
+                                <option value="{{ $key+1 }}"{{ $numberMonth == $key+1 ? 'selected' : '' }}>{{ $month }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="year" id="year" class="form-control">
+                            <option selected disabled>Pilih Tahun</option>
+                            @foreach ($years as $year)
+                                <option value="{{ $year }}" {{ $year == $yearSelected ? 'selected' : '' }}>{{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select name="place" id="place" class="form-control">
+                            <option selected disabled>Pilih Tempat</option>
+                            @foreach ($places as $place)
+                            <option value="{{ $place->id }}">{{ $place->nama_tempat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="margin-top: 1%">
+                        <button type="submit" class="btn btn-success btn-sm bg-green pull-left" data-toggle="modal" data-target="#import"> <span class="fa fa-search"> </span> Cari</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-sm bg-green pull-left" data-toggle="modal" data-target="#import"> <span class="fa fa-search"> </span> Cari</button>
             </form>
             <form action="{{ route('laporan.pengguna.pdf') }}" method="POST">
                 @csrf
@@ -56,7 +84,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('script')

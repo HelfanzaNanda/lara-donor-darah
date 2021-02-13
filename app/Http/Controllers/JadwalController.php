@@ -14,7 +14,7 @@ class JadwalController extends Controller
 {
 
     public function __construct()
-    {        
+    {
         $dateNow = Carbon::now()->format('Y-m-d');
         $schedulles = Jadwal::whereDate('tanggal','<',$dateNow)->get();
         foreach ($schedulles as $schedulle) {
@@ -23,7 +23,7 @@ class JadwalController extends Controller
             ]);
         }
     }
-    
+
     public function index()
     {
         return view('dashboard.jadwal.all');
@@ -62,8 +62,8 @@ class JadwalController extends Controller
         ],$messages,$customAttributes);
 
 
-        
-        if($valid == true){            
+
+        if($valid == true){
             //cek foto
             $cover = $request->file('foto');
             $extension = $cover->getClientOriginalExtension();
@@ -80,9 +80,9 @@ class JadwalController extends Controller
                 'foto' => $cover->getFilename().'.'.$extension,
                 // 'status' =>
             ]);
-            
+
             $data_jadwal->save();
-            
+
             return redirect()->route('jadwal.index')->with('success','Jadwal berhasil dibuat.');
         }
         else {
@@ -135,10 +135,10 @@ class JadwalController extends Controller
             $jadwal->tanggal = $request->tanggal;
             $jadwal->jam_mulai = $request->jam_mulai;
             $jadwal->jam_selesai = $request->jam_selesai;
-            $jadwal->alamat = $request->alamat;  
+            $jadwal->alamat = $request->alamat;
             $jadwal->status = $request->status;
             $jadwal->save();
-            
+
             return redirect()->route('jadwal.index')->with('success','Jadwal berhasil diubah.');
         }
     }
@@ -180,21 +180,66 @@ class JadwalController extends Controller
     {
         $data['jadwal_selesai'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','selesai')->get();
         $data['jadwal_batal'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','batal')->get();
-        
-        return view('dashboard.laporan.jadwal',$data);
+        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juni',
+        'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $years = ['2016', '2017', '2018', '2019', '2020', '2021'];
+        return view('dashboard.laporan.jadwal',[
+            'jadwal_selesai' => $data['jadwal_selesai'],
+            'jadwal_batal' => $data['jadwal_batal'],
+            'months' => $months,
+            'years' => $years,
+        ]);
     }
-    
+
     public function cetak_jadwal_selesai()
     {
+        $data = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])
+        ->where('nama_tempat',  'like', '%'. $request->place .'%')
+        ->whereMonth('tanggal', $request->month+1)
+        ->whereYear('tanggal', $request->year)->where('status','selesai')->get();
         $selesai = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','selesai')->get();
         $pdf = PDF::loadview('dashboard.laporan.jadwal_selesai_pdf',['selesai'=>$selesai]);
         return $pdf->stream();
     }
-    
+
     public function cetak_jadwal_batal()
     {
         $batal = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','batal')->get();
         $pdf = PDF::loadview('dashboard.laporan.jadwal_batal_pdf',['batal'=>$batal]);
+        return $pdf->stream();
+    }
+
+    public function search(Request $request)
+    {
+        $data['jadwal_selesai'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])
+        // ->where('jam_mulai', '<=', $request->time)
+        // ->where('jam_selesai', '>=', $request->time)
+        ->where('nama_tempat',  'like', '%'. $request->place .'%')
+        ->whereMonth('tanggal', $request->month+1)
+        ->whereYear('tanggal', $request->year)->where('status','selesai')->get();
+
+        $data['jadwal_batal'] = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])->where('status','batal')->get();
+        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli',
+        'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        $years = ['2016', '2017', '2018', '2019', '2020', '2021'];
+        return view('dashboard.laporan.jadwal',[
+            'jadwal_selesai' => $data['jadwal_selesai'],
+            'jadwal_batal' => $data['jadwal_batal'],
+            'placeSelected' => $request->place,
+            'monthSelected' => $request->month,
+            'yearSelected' => $request->year,
+            'months' => $months,
+            'years' => $years,
+        ]);
+    }
+
+    public function print(Request $request)
+    {
+        $data = Jadwal::select(['id','nama_tempat','hari','tanggal','jam_mulai','jam_selesai','alamat', 'status', 'created_at'])
+        ->where('nama_tempat',  'like', '%'. $request->place .'%')
+        ->whereMonth('tanggal', $request->month+1)
+        ->whereYear('tanggal', $request->year)->where('status','selesai')->get();
+        $pdf = PDF::loadview('dashboard.laporan.jadwal_selesai_pdf',['selesai'=>$data]);
         return $pdf->stream();
     }
 }

@@ -114,6 +114,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
         Route::get('data-jadwal', 'JadwalController@getdata')->name('jadwal.getdata');
 
         Route::get('laporan', 'JadwalController@lapJadwal')->name('laporan.jadwal');
+        Route::post('laporan/search', 'JadwalController@search')->name('laporan.jadwal.search');
+        Route::post('laporan/print', 'JadwalController@print')->name('laporan.jadwal.print');
         Route::get('jadwal-selesai', 'JadwalController@cetak_jadwal_selesai')->name('jadwal.selesai');
         Route::get('jadwal-batal', 'JadwalController@cetak_jadwal_batal')->name('jadwal.batal');
     });

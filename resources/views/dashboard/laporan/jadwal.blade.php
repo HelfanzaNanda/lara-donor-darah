@@ -8,7 +8,46 @@
           <h4 class="text-center" style="margin-bottom:0px;"><b>Jadwal Selesai</b></h4>
         </div>
         <div class="box-body">
-            <a href="{{route('jadwal.selesai')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a>
+
+        <form action="{{ route('laporan.jadwal.search') }}" autocomplete="off" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="place" placeholder="Tempat" value="{{ $placeSelected ?? '' }}">
+                </div>
+                <div class="col-md-2">
+                    <input type="time" class="form-control" name="time" placeholder="Jam" value="{{ $placeSelected ?? '' }}">
+                </div>
+                <div class="col-md-2">
+                    <select name="month" class="form-control">
+                        @foreach ($months as $key => $month)
+                            <option value="{{ $key }}">{{ $month }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="year" class="form-control">
+                        @foreach ($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary " type="submit">cari</button>
+                </div>
+            </div>
+        </form>
+
+        <form action="{{ route('laporan.jadwal.print') }}" autocomplete="off" method="POST" target="_blank">
+            @csrf
+            <div class="row">
+                <input type="hidden" name="place" value="{{ $placeSelected ?? '' }}">
+                <input type="hidden" name="month"  value="{{ $monthSelected ?? '' }}">
+                <input type="hidden" name="year"  value="{{ $yearSelected ?? '' }}">
+                <button class="btn btn-primary bg-red btn-xs" type="submit">print</button>
+            </div>
+        </form>
+            {{-- <a href="{{route('jadwal.selesai')}}" class="btn btn-primary bg-red btn-xs" target="_blank" style="margin-bottom:0px;nargin-top:0px;">Cetak</a> --}}
             <table id="jadwal-table" class="table table-bordered table-striped" style="width:100%!important;">
                 <thead>
                     <tr>
@@ -75,7 +114,7 @@
 @push('footer')
 <script src="/assets/material/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="/assets/material/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript"> 
+<script type="text/javascript">
     //Hapus Data
     $(document).ready(function() {
       $('#konfirmasi_hapus').on('show.bs.modal', function(e) {
