@@ -77,40 +77,57 @@ class APIController extends Controller
             ]);
         }
 
-        if ($request->email != 'kristinadamayanti18@gmail.com') {
-            $user = User::create([
-                'nama'       => $request->nama,
-                'email'      => $request->email,
-                'phone'      => "08923423455",
-                'email_verified_at' => now(),
-                //'role'       => 'pendonor',
-                'role'       => $request->role,
-                'password'   => Hash::make($request->password),
-                'api_token'  => Str::random(80)
-            ]);
-            return response()->json([
-                'message' => 'success',
-                'status' => true,
-                'data' => (object)[]
-            ]);
-        }else{
-            $user = User::create([
-                'nama'       => $request->nama,
-                'email'      => $request->email,
-                'phone'      => "08923423455",
-                //'role'       => 'pendonor',
-                'role'       => $request->role,
-                'password'   => Hash::make($request->password),
-                'api_token'  => Str::random(80)
-            ]);
-            $user->sendApiEmailVerificationNotification();
+        $user = User::create([
+            'nama'       => $request->nama,
+            'email'      => $request->email,
+            'phone'      => "08923423455",
+            //'role'       => 'pendonor',
+            'role'       => $request->role,
+            'password'   => Hash::make($request->password),
+            'api_token'  => Str::random(80)
+        ]);
+        $user->sendApiEmailVerificationNotification();
 
-            return response()->json([
-                'message' => 'kami telah mengirimkan email',
-                'status' => true,
-                'data' => (object)[]
-            ]);
-        }
+        return response()->json([
+            'message' => 'kami telah mengirimkan email',
+            'status' => true,
+            'data' => (object)[]
+        ]);
+
+        // if ($request->email != 'kristinadamayanti18@gmail.com') {
+        //     $user = User::create([
+        //         'nama'       => $request->nama,
+        //         'email'      => $request->email,
+        //         'phone'      => "08923423455",
+        //         'email_verified_at' => now(),
+        //         //'role'       => 'pendonor',
+        //         'role'       => $request->role,
+        //         'password'   => Hash::make($request->password),
+        //         'api_token'  => Str::random(80)
+        //     ]);
+        //     return response()->json([
+        //         'message' => 'success',
+        //         'status' => true,
+        //         'data' => (object)[]
+        //     ]);
+        // }else{
+        //     $user = User::create([
+        //         'nama'       => $request->nama,
+        //         'email'      => $request->email,
+        //         'phone'      => "08923423455",
+        //         //'role'       => 'pendonor',
+        //         'role'       => $request->role,
+        //         'password'   => Hash::make($request->password),
+        //         'api_token'  => Str::random(80)
+        //     ]);
+        //     $user->sendApiEmailVerificationNotification();
+
+        //     return response()->json([
+        //         'message' => 'kami telah mengirimkan email',
+        //         'status' => true,
+        //         'data' => (object)[]
+        //     ]);
+        // }
 
     }
 
