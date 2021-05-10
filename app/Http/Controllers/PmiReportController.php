@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Pendonor, Pengajuan, Permintaan};
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -13,18 +14,43 @@ class PmiReportController extends Controller
                         'Agustus', 'September', 'Oktober', 'November', 'Desember'];
     public $years = ['2017','2018','2019', '2020', '2021', '2022', '2023'];
 
+    // public function rs()
+    // {
+    //     $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juni',
+    //     'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+    //     $datas = Permintaan::all();
+
+    //     return view('dashboard.report.rs',[
+    //         'datas' => $datas,
+    //         'months' => $months,
+    //         'numberMonth' => 0
+    //     ]);
+    // }
+
     public function rs()
     {
-        $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juni',
-        'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-
-        $datas = Permintaan::all();
-
-        return view('dashboard.report.rs',[
-            'datas' => $datas,
-            'months' => $months,
-            'numberMonth' => 0
+        $users = User::where('role', 'rs')->get();
+        return view('dashboard.report.rs.index', [
+            'users' => $users
         ]);
+    }
+
+    public function detail_rs($id)
+    {
+        $user = User::find($id);
+        return view('dashboard.report.rs.detail', [
+            'user' => $user
+        ]);
+    }
+
+    public function pdf_rs($id)
+    {
+        $user = User::find($id);
+        $pdf = PDF::loadview('dashboard.report.rs.pdf', [
+            'user' => $user,
+        ]);
+    	return $pdf->download('Laporan '.$user->nama_rs. '.pdf');
     }
 
     public function pengguna()

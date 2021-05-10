@@ -21,23 +21,23 @@ class UserSeeder extends Seeder
             'phone' => '082313525250',
         ]);
 
-        User::create([
-            'nama' => 'rsi',
-            'email' => 'rsi@gmail.com',
-            'password'=> Hash::make('12345678'),
-            'role' => 'rs',
-            'nama_rs' => 'RSI',
-            'phone' => '082313525252',
-        ]);
+        // User::create([
+        //     'nama' => 'rsi',
+        //     'email' => 'rsi@gmail.com',
+        //     'password'=> Hash::make('12345678'),
+        //     'role' => 'rs',
+        //     'nama_rs' => 'RSI',
+        //     'phone' => '082313525252',
+        // ]);
 
-        User::create([
-            'nama' => 'kardinah',
-            'email' => 'kardinah@gmail.com',
-            'password'=> Hash::make('12345678'),
-            'role' => 'rs',
-            'nama_rs' => 'Kardinah',
-            'phone' => '082313515252',
-        ]);
+        // User::create([
+        //     'nama' => 'kardinah',
+        //     'email' => 'kardinah@gmail.com',
+        //     'password'=> Hash::make('12345678'),
+        //     'role' => 'rs',
+        //     'nama_rs' => 'Kardinah',
+        //     'phone' => '082313515252',
+        // ]);
 
         User::create([
             'nama' => 'pendonor',
@@ -46,5 +46,7 @@ class UserSeeder extends Seeder
             'role' => 'pendonor',
             'phone' => '082303525252',
         ]);
+
+        factory(User::class, 6)->create();
     }
 }

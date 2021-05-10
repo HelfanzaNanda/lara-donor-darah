@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Jadwal;
 use App\Models\Pendonor;
 use App\Models\Permintaan;
 use App\Notifications\ApiVerificationEmail;
@@ -70,6 +71,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendApiEmailVerificationNotification()
     {
         $this->notify(new ApiVerificationEmail());
+    }
+
+    public function schedulles()
+    {
+        return $this->hasMany(Jadwal::class);
     }
 
 }

@@ -70,8 +70,10 @@ Route::group(['prefix' => 'dashboard', 'middleware' => 'auth'], function(){
 
     Route::group(['prefix' => 'report', 'middleware' => 'auth.isPmi'], function () {
         Route::get('rs', 'PmiReportController@rs')->name('laporan.rs');
+        Route::get('rs/detail/{id}', 'PmiReportController@detail_rs')->name('laporan.rs.detail');
+        Route::get('rs/pdf/{id}', 'PmiReportController@pdf_rs')->name('laporan.rs.pdf');
         Route::post('rs/search', 'PmiReportController@rsSearch')->name('laporan.rs.search');
-        Route::post('rs/pdf', 'PmiReportController@rsPdf')->name('laporan.rs.pdf');
+        //Route::post('rs/pdf', 'PmiReportController@rsPdf')->name('laporan.rs.pdf');
         Route::get('pengguna', 'PmiReportController@pengguna')->name('laporan.pengguna');
         Route::post('pengguna/search', 'PmiReportController@penggunaSearch')->name('laporan.pengguna.search');
         Route::post('pengguna/pdf', 'PmiReportController@penggunaPdf')->name('laporan.pengguna.pdf');
